@@ -1,11 +1,30 @@
+using bstate.core.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace bstate.core.Components;
 
-public abstract class BStateComponent : ComponentBase
+public abstract class BStateComponent : ComponentBase, IAsyncDisposable
 {
-    protected void UseState<T>() where T : BState
+    [Inject]
+    private IBStateRegister BStateRegister { get; set; } 
+    
+    [Inject]
+    private IServiceProvider ServiceProvider { get; set; } 
+
+    protected T UseState<T>() where T : BState
     {
-           
+        BStateRegister.Add<T>(this);
+        var state = ServiceProvider.GetService<T>()!;
+        state.Initialize();
+        return state;
+    }
+
+    public void BStateRender() => this.StateHasChanged();
+
+    public ValueTask DisposeAsync()
+    {
+        BStateRegister.Clear(this);
+        return ValueTask.CompletedTask;
     }
 }

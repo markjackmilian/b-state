@@ -1,15 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Linq;
+using bstate.core.Services;
 
 namespace bstate.core;
 
 public static class Startup
 {
-    public static void AddBState(IServiceCollection serviceCollection)
+    public static void AddBState(this IServiceCollection serviceCollection)
     {
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         RegisterStates(serviceCollection, assemblies);
+        serviceCollection.AddSingleton<IBStateRegister, BStateRegister>();
     }
 
     private static void RegisterStates(IServiceCollection serviceCollection, Assembly[] assemblies)
