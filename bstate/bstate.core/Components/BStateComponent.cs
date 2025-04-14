@@ -15,9 +15,7 @@ public abstract class BStateComponent : ComponentBase, IAsyncDisposable
     protected T UseState<T>() where T : BState
     {
         BStateRegister.Add<T>(this);
-        var state = ServiceProvider.GetService<T>()!;
-        state.Initialize();
-        return state;
+        return ServiceProvider.GetService<T>()!;
     }
 
     public void BStateRender() => this.StateHasChanged();
