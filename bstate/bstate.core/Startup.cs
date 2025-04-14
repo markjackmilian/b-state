@@ -17,6 +17,7 @@ public static class Startup
         serviceCollection.AddSingleton<IBstateRunner, BstateRunner>();
         
         serviceCollection.AddTransient<ActionRunnerNode>();
+        serviceCollection.AddTransient<PostProcessorRenderer>();
         
         RegisterActionHandlers(serviceCollection, assemblies);
     }

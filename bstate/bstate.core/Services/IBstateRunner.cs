@@ -13,7 +13,8 @@ class BstateRunner(IServiceProvider serviceProvider) : IBstateRunner
     public async Task Run(IAction action)
     {
         var pipeline = new AsyncPipeline<IAction>(new ServiceProviderMiddlewareResolver(serviceProvider))
-            .Add<ActionRunnerNode>();
+            .Add<ActionRunnerNode>()
+            .Add<PostProcessorRenderer>();
         
         await pipeline.Execute(action);
     }

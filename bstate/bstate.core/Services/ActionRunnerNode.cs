@@ -1,10 +1,11 @@
+using System.Diagnostics;
 using PipelineNet.Middleware;
 
 namespace bstate.core.Services;
 
 public class ActionRunnerNode(IServiceProvider serviceProvider) : IAsyncMiddleware<IAction>
 {
-    public Task Run(IAction parameter, Func<IAction, Task> next)
+    public async Task Run(IAction parameter, Func<IAction, Task> next)
     {
         var parameterType = parameter.GetType();
         var handlerType = typeof(IActionHandler<>).MakeGenericType(parameterType);
@@ -13,9 +14,11 @@ public class ActionRunnerNode(IServiceProvider serviceProvider) : IAsyncMiddlewa
         if (handler != null)
         {
             var executeMethod = handlerType.GetMethod("Execute");
-            return (Task)executeMethod.Invoke(handler, [parameter]);
+            var task = (Task)executeMethod!.Invoke(handler, [parameter]);
+            Debug.Assert(task != null, nameof(task) + " != null");
+            await task;
         }
     
-        return next(parameter);
+        await next(parameter);
     }
 }

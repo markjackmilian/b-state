@@ -7,6 +7,9 @@ internal interface IBStateRegister
     void Add<T>(BStateComponent component) where T : BState;
     void Remove<T>(BStateComponent component) where T : BState;
     void Clear(BStateComponent component);
+    
+    BStateComponent[] GetComponents<T>() where T : BState;
+    BStateComponent[] GetComponents();
 }
 
 internal sealed class BStateRegister : IBStateRegister
@@ -53,5 +56,36 @@ internal sealed class BStateRegister : IBStateRegister
                 }
             }
         }
+    }
+
+    public BStateComponent[] GetComponents<T>() where T : BState
+    {
+        var stateType = typeof(T);
+
+        if (_stateComponents.TryGetValue(stateType, out var components))
+        {
+            return components.ToArray();
+        }
+
+        return [];
+    }
+
+    public BStateComponent[] GetComponents()
+    {
+        // Create a new HashSet to avoid duplicate components
+        var allComponents = new HashSet<BStateComponent>();
+
+        // Iterate through all state types in the dictionary
+        foreach (var componentSet in _stateComponents.Values)
+        {
+            // Add all components from each state type to our result set
+            foreach (var component in componentSet)
+            {
+                allComponents.Add(component);
+            }
+        }
+
+        // Convert the HashSet to an array and return it
+        return allComponents.ToArray();
     }
 }
