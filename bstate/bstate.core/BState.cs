@@ -1,10 +1,18 @@
+using bstate.core.Services;
+
 namespace bstate.core;
 
 public abstract class BState
 {
-    protected BState()
+    protected IBstateRunner Runner { get; }
+
+    protected BState(IBstateRunner runner)
     {
+        Runner = runner;
         this.Initialize();
     }
-    public abstract void Initialize();
+
+   
+
+    protected abstract void Initialize();
 }

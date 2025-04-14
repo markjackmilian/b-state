@@ -1,8 +1,14 @@
-@using bstate.web.example.Features
 @inherits bstate.core.Components.BStateComponent
 <h3>TestComponent</h3>
 <h4>@this.State.Name</h4>
+<button @onclick="SetName"></button>
 
 @code {
     TestState State => this.UseState<TestState>();
+
+    private async Task SetName()
+    {
+        await this.State.SetName("camaleonte");
+    }
+
 }
