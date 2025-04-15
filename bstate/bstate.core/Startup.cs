@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using bstate.core.Middlewares;
 using bstate.core.Services;
 
 namespace bstate.core;
@@ -16,7 +17,7 @@ public static class Startup
         serviceCollection.AddSingleton<IStore, Store>();
         serviceCollection.AddSingleton<IBstateRunner, BstateRunner>();
         
-        serviceCollection.AddTransient<ActionRunnerNode>();
+        serviceCollection.AddTransient<ActionRunnerMiddleware>();
         serviceCollection.AddTransient<PostProcessorRenderer>();
         
         RegisterActionHandlers(serviceCollection, assemblies);

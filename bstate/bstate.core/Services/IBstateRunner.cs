@@ -1,3 +1,4 @@
+using bstate.core.Middlewares;
 using PipelineNet.Pipelines;
 using PipelineNet.ServiceProvider.MiddlewareResolver;
 
@@ -13,7 +14,7 @@ class BstateRunner(IServiceProvider serviceProvider) : IBstateRunner
     public async Task Run(IAction action)
     {
         var pipeline = new AsyncPipeline<IAction>(new ServiceProviderMiddlewareResolver(serviceProvider))
-            .Add<ActionRunnerNode>()
+            .Add<ActionRunnerMiddleware>()
             .Add<PostProcessorRenderer>();
         
         await pipeline.Execute(action);
