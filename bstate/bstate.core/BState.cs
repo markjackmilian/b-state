@@ -11,8 +11,5 @@ public abstract class BState
         Runner = runner;
         this.Initialize();
     }
-
-   
-
     protected abstract void Initialize();
 }

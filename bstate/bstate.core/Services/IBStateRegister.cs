@@ -2,12 +2,12 @@ using bstate.core.Components;
 
 namespace bstate.core.Services;
 
-internal interface IBStateRegister
+internal interface IBStateRegister : IDisposable
 {
     void Add<T>(BStateComponent component) where T : BState;
     void Remove<T>(BStateComponent component) where T : BState;
     void Clear(BStateComponent component);
-    
+
     BStateComponent[] GetComponents<T>() where T : BState;
     BStateComponent[] GetComponents(Type stateType);
     BStateComponent[] GetComponents();
@@ -15,79 +15,125 @@ internal interface IBStateRegister
 
 internal sealed class BStateRegister : IBStateRegister
 {
-     private readonly Dictionary<Type, HashSet<BStateComponent>> _stateComponents = new();
-    
+    private readonly Dictionary<Type, HashSet<BStateComponent>> _stateComponents = new();
+    private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
+
     public void Add<T>(BStateComponent component) where T : BState
     {
         var stateType = typeof(T);
 
-        if (!_stateComponents.TryGetValue(stateType, out var components))
+        _lock.EnterWriteLock();
+        try
         {
-            components = new HashSet<BStateComponent>();
-            _stateComponents[stateType] = components;
-        }
+            if (!_stateComponents.TryGetValue(stateType, out var components))
+            {
+                components = new HashSet<BStateComponent>();
+                _stateComponents[stateType] = components;
+            }
 
-        components.Add(component);
+            components.Add(component);
+        }
+        finally
+        {
+            _lock.ExitWriteLock();
+        }
     }
 
     public void Remove<T>(BStateComponent component) where T : BState
     {
         var stateType = typeof(T);
 
-        if (_stateComponents.TryGetValue(stateType, out var components))
+        _lock.EnterWriteLock();
+        try
         {
-            components.Remove(component);
-            if (components.Count == 0)
+            if (_stateComponents.TryGetValue(stateType, out var components))
             {
-                _stateComponents.Remove(stateType);
+                components.Remove(component);
+                if (components.Count == 0)
+                {
+                    _stateComponents.Remove(stateType);
+                }
             }
+        }
+        finally
+        {
+            _lock.ExitWriteLock();
         }
     }
 
     public void Clear(BStateComponent component)
     {
-        foreach (var entry in _stateComponents.ToList())
+        _lock.EnterWriteLock();
+        try
         {
-            var components = entry.Value;
-            if (components.Remove(component))
+            // Create a copy of the dictionary entries to avoid modification during enumeration
+            foreach (var entry in _stateComponents.ToList())
             {
-                if (components.Count == 0)
+                var components = entry.Value;
+                if (components.Remove(component))
                 {
-                    _stateComponents.Remove(entry.Key);
+                    if (components.Count == 0)
+                    {
+                        _stateComponents.Remove(entry.Key);
+                    }
                 }
             }
         }
+        finally
+        {
+            _lock.ExitWriteLock();
+        }
     }
 
-    public BStateComponent[] GetComponents<T>() where T : BState => GetComponents(typeof(T)); 
-    
+    public BStateComponent[] GetComponents<T>() where T : BState => GetComponents(typeof(T));
 
     public BStateComponent[] GetComponents(Type stateType)
     {
-        if (_stateComponents.TryGetValue(stateType, out var components))
+        _lock.EnterReadLock();
+        try
         {
-            return components.ToArray();
-        }
+            if (_stateComponents.TryGetValue(stateType, out var components))
+            {
+                return components.ToArray();
+            }
 
-        return [];
+            return [];
+        }
+        finally
+        {
+            _lock.ExitReadLock();
+        }
     }
 
     public BStateComponent[] GetComponents()
     {
-        // Create a new HashSet to avoid duplicate components
-        var allComponents = new HashSet<BStateComponent>();
-
-        // Iterate through all state types in the dictionary
-        foreach (var componentSet in _stateComponents.Values)
+        _lock.EnterReadLock();
+        try
         {
-            // Add all components from each state type to our result set
-            foreach (var component in componentSet)
-            {
-                allComponents.Add(component);
-            }
-        }
+            // Create a new HashSet to avoid duplicate components
+            var allComponents = new HashSet<BStateComponent>();
 
-        // Convert the HashSet to an array and return it
-        return allComponents.ToArray();
+            // Iterate through all state types in the dictionary
+            foreach (var componentSet in _stateComponents.Values)
+            {
+                // Add all components from each state type to our result set
+                foreach (var component in componentSet)
+                {
+                    allComponents.Add(component);
+                }
+            }
+
+            // Convert the HashSet to an array and return it
+            return allComponents.ToArray();
+        }
+        finally
+        {
+            _lock.ExitReadLock();
+        }
+    }
+
+    public void Dispose()
+    {
+        _lock.Dispose();
     }
 }
