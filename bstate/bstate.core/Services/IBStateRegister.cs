@@ -9,6 +9,7 @@ internal interface IBStateRegister
     void Clear(BStateComponent component);
     
     BStateComponent[] GetComponents<T>() where T : BState;
+    BStateComponent[] GetComponents(Type stateType);
     BStateComponent[] GetComponents();
 }
 
@@ -58,10 +59,11 @@ internal sealed class BStateRegister : IBStateRegister
         }
     }
 
-    public BStateComponent[] GetComponents<T>() where T : BState
-    {
-        var stateType = typeof(T);
+    public BStateComponent[] GetComponents<T>() where T : BState => GetComponents(typeof(T)); 
+    
 
+    public BStateComponent[] GetComponents(Type stateType)
+    {
         if (_stateComponents.TryGetValue(stateType, out var components))
         {
             return components.ToArray();

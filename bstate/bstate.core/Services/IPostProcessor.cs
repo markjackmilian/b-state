@@ -9,7 +9,9 @@ class PostProcessorRenderer(IBStateRegister register) : IPostProcessor
 {
     public Task Run(IAction parameter, Func<IAction, Task> next)
     {
-        var components = register.GetComponents();
+        var stateType = parameter.GetType().DeclaringType;
+        
+        var components = register.GetComponents(stateType);
         foreach (var bStateComponent in components)
         {
             bStateComponent.BStateRender();
