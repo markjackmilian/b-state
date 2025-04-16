@@ -25,7 +25,7 @@ public static class Startup
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         serviceCollection.AddSingleton<IComponentRegister, ComponentRegister>();
         serviceCollection.AddSingleton<IStore, Store>();
-        serviceCollection.AddSingleton<IBstateRunner, BstateRunner>();
+        serviceCollection.AddSingleton<IActionChannel, ActionChannel>();
         
         serviceCollection.AddTransient<ActionRunnerMiddleware>();
         serviceCollection.AddTransient<PostProcessorRenderer>();

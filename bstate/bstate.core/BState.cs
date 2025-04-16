@@ -4,9 +4,9 @@ namespace bstate.core;
 
 public abstract class BState
 {
-    protected IBstateRunner Runner { get; }
+    protected IActionChannel Runner { get; }
 
-    protected BState(IBstateRunner runner)
+    protected BState(IActionChannel runner)
     {
         Runner = runner;
         this.Initialize();

@@ -4,7 +4,7 @@ using PipelineNet.Middleware;
 
 namespace bstate.web.example.Components.Test;
 
-internal partial class TestState(IBstateRunner runner) : BState(runner)
+internal partial class TestState(IActionChannel runner) : BState(runner)
 {
     public string Name { get; private set; }
 
@@ -28,7 +28,7 @@ internal partial class TestState
         }
     }
 
-    public Task SetName(string name) => this.Runner.Run(new TestAction(name));
+    public Task SetName(string name) => this.Runner.Send(new TestAction(name));
 
 
 }

@@ -6,14 +6,14 @@ using PipelineNet.ServiceProvider.MiddlewareResolver;
 
 namespace bstate.core.Services;
 
-public interface IBstateRunner
+public interface IActionChannel
 {
-    Task Run(IAction action);
+    Task Send(IAction action);
 }
 
-class BstateRunner(IServiceProvider serviceProvider, BStateConfiguration configuration) : IBstateRunner
+class ActionChannel(IServiceProvider serviceProvider, BStateConfiguration configuration) : IActionChannel
 {
-    public async Task Run(IAction action)
+    public async Task Send(IAction action)
     {
         var pipeline = new PipelineBuilder(serviceProvider)
             .AddPreprocessors(configuration.MiddlewareRegister.GetPreprocessors())
