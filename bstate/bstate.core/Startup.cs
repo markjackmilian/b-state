@@ -22,36 +22,16 @@ public static class Startup
             serviceCollection.AddTransient(preProcessor);
         }
 
-        
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        RegisterStates(serviceCollection, assemblies);
         serviceCollection.AddSingleton<IComponentRegister, ComponentRegister>();
         serviceCollection.AddSingleton<IStore, Store>();
         serviceCollection.AddSingleton<IBstateRunner, BstateRunner>();
-        //serviceCollection.AddSingleton<IMiddlewareRegister, MiddlewareRegister>();
         
         serviceCollection.AddTransient<ActionRunnerMiddleware>();
         serviceCollection.AddTransient<PostProcessorRenderer>();
         
+        RegisterStates(serviceCollection, assemblies);
         RegisterActionHandlers(serviceCollection, assemblies);
-    }
-
-    private static void RegisterMiddlewares(IServiceCollection serviceCollection, Assembly[] assemblies)
-    {
-        var middlewareTypes = assemblies
-            .SelectMany(a => a.GetTypes())
-            .Where(t => t is { IsClass: true, IsAbstract: false } 
-                       && (typeof(IPreprocessorMiddleware).IsAssignableFrom(t) 
-                           || typeof(IPostProcessor).IsAssignableFrom(t)));
-    
-        foreach (var middlewareType in middlewareTypes)
-        {
-            if (typeof(IPreprocessorMiddleware).IsAssignableFrom(middlewareType))
-                serviceCollection.AddTransient(typeof(IPreprocessorMiddleware), middlewareType);
-            
-            if (typeof(IPostProcessor).IsAssignableFrom(middlewareType))
-                serviceCollection.AddTransient(typeof(IPostProcessor), middlewareType);
-        }
     }
 
     private static void RegisterActionHandlers(IServiceCollection serviceCollection, Assembly[] assemblies)
