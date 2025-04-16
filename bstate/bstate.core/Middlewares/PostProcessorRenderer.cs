@@ -1,11 +1,8 @@
-using PipelineNet.Middleware;
+using bstate.core.Services;
 
-namespace bstate.core.Services;
+namespace bstate.core.Middlewares;
 
-public interface IPostProcessor : IAsyncMiddleware<IAction>
-{ }
-
-class PostProcessorRenderer(IComponentRegister register) : IPostProcessor
+class PostProcessorRenderer(IComponentRegister register) : IPostProcessorMiddleware
 {
     public Task Run(IAction parameter, Func<IAction, Task> next)
     {
