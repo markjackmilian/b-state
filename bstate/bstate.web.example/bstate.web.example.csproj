@@ -15,4 +15,13 @@
       <ProjectReference Include="..\bstate.core\bstate.core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Components\Features\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Components\Features\Test\SecondComponent.razor" />
+      <AdditionalFiles Include="Components\Features\Test\TestComponent.razor" />
+    </ItemGroup>
+
 </Project>
