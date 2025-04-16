@@ -20,8 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Components\Features\Test\SecondComponent.razor" />
-      <AdditionalFiles Include="Components\Features\Test\TestComponent.razor" />
+      <AdditionalFiles Include="Components\Features\RandomTest\SecondComponent.razor" />
+      <AdditionalFiles Include="Components\Features\RandomTest\TestComponent.razor" />
     </ItemGroup>
 
 </Project>
