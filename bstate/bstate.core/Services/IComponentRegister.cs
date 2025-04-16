@@ -2,7 +2,7 @@ using bstate.core.Components;
 
 namespace bstate.core.Services;
 
-internal interface IBStateRegister : IDisposable
+internal interface IComponentRegister : IDisposable
 {
     void Add<T>(BStateComponent component) where T : BState;
     void Remove<T>(BStateComponent component) where T : BState;
@@ -13,7 +13,7 @@ internal interface IBStateRegister : IDisposable
     BStateComponent[] GetComponents();
 }
 
-internal sealed class BStateRegister : IBStateRegister
+internal sealed class ComponentRegister : IComponentRegister
 {
     private readonly Dictionary<Type, HashSet<BStateComponent>> _stateComponents = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);

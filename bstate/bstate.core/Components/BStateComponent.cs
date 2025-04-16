@@ -7,14 +7,14 @@ namespace bstate.core.Components;
 public abstract class BStateComponent : ComponentBase, IAsyncDisposable
 {
     [Inject]
-    private IBStateRegister BStateRegister { get; set; } 
+    private IComponentRegister ComponentRegister { get; set; } 
     
     [Inject]
     private IServiceProvider ServiceProvider { get; set; } 
 
     protected T UseState<T>() where T : BState
     {
-        BStateRegister.Add<T>(this);
+        ComponentRegister.Add<T>(this);
         return ServiceProvider.GetService<T>()!;
     }
 
@@ -22,7 +22,7 @@ public abstract class BStateComponent : ComponentBase, IAsyncDisposable
 
     public ValueTask DisposeAsync()
     {
-        BStateRegister.Clear(this);
+        ComponentRegister.Clear(this);
         return ValueTask.CompletedTask;
     }
 }

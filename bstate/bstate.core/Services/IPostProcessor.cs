@@ -5,7 +5,7 @@ namespace bstate.core.Services;
 public interface IPostProcessor : IAsyncMiddleware<IAction>
 { }
 
-class PostProcessorRenderer(IBStateRegister register) : IPostProcessor
+class PostProcessorRenderer(IComponentRegister register) : IPostProcessor
 {
     public Task Run(IAction parameter, Func<IAction, Task> next)
     {
