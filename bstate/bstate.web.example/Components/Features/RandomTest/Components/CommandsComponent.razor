@@ -2,8 +2,10 @@
 
 <h3>Those are commands</h3>
 <button @onclick="SetRandomValue">Random Phrase</button>
+<button @onclick="LongAction" disabled="@State.IsLoading">LongAction</button>
 
 @code {
     RandomTestState State => this.UseState<RandomTestState>();
     private Task SetRandomValue() => this.State.SetRandomName();
+    private Task LongAction() => this.State.RunALong();
 }

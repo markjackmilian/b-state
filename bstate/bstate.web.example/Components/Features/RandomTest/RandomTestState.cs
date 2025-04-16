@@ -6,10 +6,12 @@ namespace bstate.web.example.Components.Features.RandomTest;
 internal partial class RandomTestState(IActionChannel runner) : BState(runner)
 {
     public string Name { get; private set; }
+    public bool IsLoading { get; private set; }
 
     protected override void Initialize()
     {
         this.Name = "Cavallo";
+        this.IsLoading = false;
     }
 }
 
@@ -33,6 +35,10 @@ internal partial class RandomTestState
 
 }
 
+
+
+
+
 internal partial class RandomTestState
 {
     record SetNameAction(string Name) : IAction;
@@ -49,6 +55,44 @@ internal partial class RandomTestState
 
     public Task SetName(string name) => this.Runner.Send(new SetNameAction(name));
 }
+
+internal partial class RandomTestState
+{
+    record SetIsLoadingAction(bool IsLoading) : IAction;
+
+    class SetIsLoadingActionHandler(IStore store) : ActionHandler<SetIsLoadingAction>(store)
+    {
+        private RandomTestState State => store.Get<RandomTestState>();
+        public override Task Execute(SetIsLoadingAction request)
+        {
+            State.IsLoading = request.IsLoading;
+            return Task.CompletedTask;
+        }
+    }
+
+    public Task SetIsLoading(bool isLoading) => this.Runner.Send(new SetIsLoadingAction(isLoading));
+}
+
+
+internal partial class RandomTestState
+{
+    record RunALongAction : IAction;
+    
+    class RunALongActionHandler(IStore store) : ActionHandler<RunALongAction>(store)
+    {
+        RandomTestState State => store.Get<RandomTestState>();
+        public override async Task Execute(RunALongAction request)
+        {
+            await State.SetIsLoading(true);
+            await Task.Delay(3000);
+            await State.SetRandomName();
+            await State.SetIsLoading(false);
+        }
+    }
+
+    public Task RunALong() => this.Runner.Send(new RunALongAction());
+}
+
 
 
 
