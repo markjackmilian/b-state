@@ -19,9 +19,4 @@
       <Folder Include="Components\Features\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <AdditionalFiles Include="Components\Features\RandomTest\SecondComponent.razor" />
-      <AdditionalFiles Include="Components\Features\RandomTest\TestComponent.razor" />
-    </ItemGroup>
-
 </Project>

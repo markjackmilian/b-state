@@ -3,7 +3,7 @@ using bstate.core.Services;
 
 namespace bstate.web.example.Components.Features.RandomTest;
 
-internal partial class RandomTestState(IActionChannel runner) : BState(runner)
+internal partial class RandomTestState(IActionChannel channel) : BState(channel)
 {
     public string Name { get; private set; }
     public bool IsLoading { get; private set; }
@@ -31,7 +31,7 @@ internal partial class RandomTestState
         }
     }
     
-    public Task SetRandomName() => this.Runner.Send(new RetrieveRandomNameAction());
+    public Task SetRandomName() => this.Channel.Send(new RetrieveRandomNameAction());
 
 }
 
@@ -53,7 +53,7 @@ internal partial class RandomTestState
         }
     }
 
-    public Task SetName(string name) => this.Runner.Send(new SetNameAction(name));
+    public Task SetName(string name) => this.Channel.Send(new SetNameAction(name));
 }
 
 internal partial class RandomTestState
@@ -70,7 +70,7 @@ internal partial class RandomTestState
         }
     }
 
-    public Task SetIsLoading(bool isLoading) => this.Runner.Send(new SetIsLoadingAction(isLoading));
+    public Task SetIsLoading(bool isLoading) => this.Channel.Send(new SetIsLoadingAction(isLoading));
 }
 
 
@@ -90,7 +90,7 @@ internal partial class RandomTestState
         }
     }
 
-    public Task RunALong() => this.Runner.Send(new RunALongAction());
+    public Task RunALong() => this.Channel.Send(new RunALongAction());
 }
 
 

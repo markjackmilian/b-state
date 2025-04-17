@@ -4,11 +4,11 @@ namespace bstate.core;
 
 public abstract class BState
 {
-    protected IActionChannel Runner { get; }
+    protected IActionChannel Channel { get; }
 
-    protected BState(IActionChannel runner)
+    protected BState(IActionChannel channel)
     {
-        Runner = runner;
+        Channel = channel;
         this.Initialize();
     }
     protected abstract void Initialize();
