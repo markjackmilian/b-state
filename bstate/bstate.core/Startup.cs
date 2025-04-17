@@ -22,7 +22,7 @@ public static class Startup
             serviceCollection.AddTransient(preProcessor);
         }
 
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        var assemblies = configuration.LoadAssemblies.ToArray();
         serviceCollection.AddSingleton<IComponentRegister, ComponentRegister>();
         serviceCollection.AddSingleton<IStore, Store>();
         serviceCollection.AddSingleton<IActionChannel, ActionChannel>();

@@ -1,3 +1,4 @@
+using System.Reflection;
 using bstate.core;
 using bstate.core.Classes;
 using Microsoft.AspNetCore.Components.Web;
@@ -13,6 +14,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddBState(configuration =>
 {
+    configuration.RegisterFrom(Assembly.GetExecutingAssembly());
+    
     configuration.AddPreprocessor<TestPreprocessorMiddleware>();
     configuration.AddPostprocessor<TestPostprocessorMiddleware>();
 });
