@@ -1,4 +1,5 @@
 using bstate.core;
+using bstate.core.Classes;
 using bstate.core.Services;
 
 namespace bstate.web.example.Components.Features.RandomTest;

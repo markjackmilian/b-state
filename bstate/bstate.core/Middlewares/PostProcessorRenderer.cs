@@ -1,3 +1,4 @@
+using bstate.core.Classes;
 using bstate.core.Services;
 
 namespace bstate.core.Middlewares;

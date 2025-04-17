@@ -1,6 +1,6 @@
 using bstate.core.Services;
 
-namespace bstate.core;
+namespace bstate.core.Classes;
 
 public interface IAction
 { }

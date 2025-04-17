@@ -6,12 +6,12 @@ using PipelineNet.ServiceProvider.MiddlewareResolver;
 
 namespace bstate.core.Services;
 
-public interface IActionChannel
+public interface IBus
 {
     Task Send(IAction action);
 }
 
-class ActionChannel(IServiceProvider serviceProvider, BStateConfiguration configuration) : IActionChannel
+class Bus(IServiceProvider serviceProvider, BStateConfiguration configuration) : IBus
 {
     public async Task Send(IAction action)
     {

@@ -1,4 +1,5 @@
 using bstate.core;
+using bstate.core.Classes;
 using bstate.core.Middlewares;
 
 namespace bstate.web.example.Components.Test;
