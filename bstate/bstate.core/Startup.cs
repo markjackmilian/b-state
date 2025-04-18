@@ -69,6 +69,12 @@ public static class Startup
         {
             serviceCollection.AddTransient(postprocessorType);
         }
+        
+        // Register beaviours
+        foreach (var postprocessorType in configuration.MiddlewareRegister.GetBehaviours())
+        {
+            serviceCollection.AddTransient(postprocessorType);
+        }
     }
     
     /// <summary>

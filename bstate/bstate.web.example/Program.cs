@@ -15,7 +15,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBState(configuration =>
 {
     configuration.RegisterFrom(Assembly.GetExecutingAssembly());
-    
+
+    configuration.AddBeaviour<LogBeaviour>();
     configuration.AddPreprocessor<TestPreprocessorMiddleware>();
     configuration.AddPostprocessor<TestPostprocessorMiddleware>();
 });

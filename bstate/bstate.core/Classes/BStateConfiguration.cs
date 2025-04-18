@@ -34,4 +34,10 @@ public class BStateConfiguration
         MiddlewareRegister.AddPostprocessor<T>();
         return this;
     }
+    
+    public BStateConfiguration AddBeaviour<T>() where T : class, IBehaviour 
+    {
+        MiddlewareRegister.AddBeaviour<T>();
+        return this;
+    }
 }

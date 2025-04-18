@@ -31,6 +31,15 @@ class PipelineBuilder(IServiceProvider serviceProvider)
         _pipeline.Add<PostProcessorRenderer>();
         return this;
     }
+    
+    public PipelineBuilder AddBeaviours(IEnumerable<Type> behaviours)
+    {
+        foreach (var behaviour in behaviours)
+        {
+            _pipeline.Add(behaviour);       
+        }
+        return this;
+    }
 
     public AsyncPipeline<IAction> Build()
     {
