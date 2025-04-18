@@ -6,7 +6,6 @@ namespace bstate.core.Services;
 public interface IBus
 {
     Task Send(IAction action);
-    Task Send<T>(IRequest<T> action);
 }
 
 class Bus(IServiceProvider serviceProvider, BStateConfiguration configuration) : IBus
@@ -21,10 +20,5 @@ class Bus(IServiceProvider serviceProvider, BStateConfiguration configuration) :
             .Build();
 
         await pipeline.Execute(action);
-    }
-
-    public Task Send<T>(IRequest<T> action)
-    {
-        throw new NotImplementedException();
     }
 }
