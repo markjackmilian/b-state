@@ -8,12 +8,9 @@ class PipelineBuilder(IServiceProvider serviceProvider)
 {
     private readonly AsyncPipeline<IAction> _pipeline = new(new ServiceProviderMiddlewareResolver(serviceProvider));
 
-    public PipelineBuilder AddPreprocessors(IEnumerable<Type> preprocessors)
+    public PipelineBuilder AddPreprocessors()
     {
-        foreach (var preprocessor in preprocessors)
-        {
-            _pipeline.Add(preprocessor);
-        }
+        _pipeline.Add<PreProcessorRunnerMiddleware>();
         return this;
     }
 
@@ -23,12 +20,9 @@ class PipelineBuilder(IServiceProvider serviceProvider)
         return this;
     }
 
-    public PipelineBuilder AddPostprocessors(IEnumerable<Type> postProcessors)
+    public PipelineBuilder AddPostprocessors()
     {
-        foreach (var postProcessor in postProcessors)
-        {
-            _pipeline.Add(postProcessor);
-        }
+        _pipeline.Add<PostProcessorRunnerMiddleware>();
         return this;
     }
 

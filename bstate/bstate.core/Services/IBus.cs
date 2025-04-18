@@ -8,14 +8,14 @@ public interface IBus
     Task Send(IAction action);
 }
 
-class Bus(IServiceProvider serviceProvider, BStateConfiguration configuration) : IBus
+class Bus(IServiceProvider serviceProvider) : IBus
 {
     public async Task Send(IAction action)
     {
         var pipeline = new PipelineBuilder(serviceProvider)
-            .AddPreprocessors(configuration.MiddlewareRegister.GetPreprocessors())
+            .AddPreprocessors()
             .AddActionRunner()
-            .AddPostprocessors(configuration.MiddlewareRegister.GetPostprocessors())
+            .AddPostprocessors()
             .AddRenderer()
             .Build();
 

@@ -4,7 +4,7 @@ using bstate.core.Classes;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using bstate.web.example;
-using bstate.web.example.Components.Test;
+using bstate.web.example.Components.Features.RandomTest;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

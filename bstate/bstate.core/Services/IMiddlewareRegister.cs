@@ -5,8 +5,8 @@ namespace bstate.core.Services;
 
 public interface IMiddlewareRegister
 {
-    public void AddPreprocessor<T>() where T : class, IPreprocessorMiddleware;
-    public void AddPostprocessor<T>() where T : class, IPostProcessorMiddleware;
+    public void AddPreprocessor<T>() where T : class, IPreProcessor;
+    public void AddPostprocessor<T>() where T : class, IPostProcessor;
     IEnumerable<Type> GetPreprocessors();
     IEnumerable<Type> GetPostprocessors();
 }
@@ -17,12 +17,12 @@ class MiddlewareRegister : IMiddlewareRegister
     private readonly ConcurrentBag<Type> _preprocessors = new();
     private readonly ConcurrentBag<Type> _postprocessors = new();
 
-    public void AddPreprocessor<T>() where T : class, IPreprocessorMiddleware
+    public void AddPreprocessor<T>() where T : class, IPreProcessor
     {
         _preprocessors.Add(typeof(T));
     }
 
-    public void AddPostprocessor<T>() where T : class, IPostProcessorMiddleware
+    public void AddPostprocessor<T>() where T : class, IPostProcessor
     {
         _postprocessors.Add(typeof(T));
     }

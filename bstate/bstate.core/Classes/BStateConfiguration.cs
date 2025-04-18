@@ -23,13 +23,13 @@ public class BStateConfiguration
     }
 
     
-    public BStateConfiguration AddPreprocessor<T>() where T : class, IPreprocessorMiddleware
+    public BStateConfiguration AddPreprocessor<T>() where T : class, IPreProcessor
     {
         MiddlewareRegister.AddPreprocessor<T>();
         return this;
     }
 
-    public BStateConfiguration AddPostprocessor<T>() where T : class, IPostProcessorMiddleware 
+    public BStateConfiguration AddPostprocessor<T>() where T : class, IPostProcessor 
     {
         MiddlewareRegister.AddPostprocessor<T>();
         return this;

@@ -1,23 +1,22 @@
-using bstate.core;
 using bstate.core.Classes;
 using bstate.core.Middlewares;
 
-namespace bstate.web.example.Components.Test;
+namespace bstate.web.example.Components.Features.RandomTest;
 
-public class TestPreprocessorMiddleware : IPreprocessorMiddleware
+public class TestPreprocessorMiddleware : IPreProcessor
 {
-    public Task Run(IAction parameter, Func<IAction, Task> next)
+    public Task Run(IAction parameter)
     {
         Console.WriteLine("TestPreprocessorMiddleware");
-        return next(parameter);
+        return Task.CompletedTask;
     }
 }
 
-public class TestPostprocessorMiddleware : IPostProcessorMiddleware
+public class TestPostprocessorMiddleware : IPostProcessor
 {
-    public Task Run(IAction parameter, Func<IAction, Task> next)
+    public Task Run(IAction parameter)
     {
         Console.WriteLine("TestPostprocessorMiddleware");
-        return next(parameter);
+        return Task.CompletedTask;
     }
 }

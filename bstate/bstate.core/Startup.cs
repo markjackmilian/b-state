@@ -48,6 +48,8 @@ public static class Startup
         
         // Register transient services
         serviceCollection.AddTransient<ActionRunnerMiddleware>();
+        serviceCollection.AddTransient<PreProcessorRunnerMiddleware>();
+        serviceCollection.AddTransient<PostProcessorRunnerMiddleware>();
         serviceCollection.AddTransient<PostProcessorRenderer>();
     }
     
