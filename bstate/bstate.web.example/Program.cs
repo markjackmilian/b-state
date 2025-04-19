@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using bstate.web.example;
 using bstate.web.example.Components.Features.RandomTest;
+using bstate.web.example.Components.Features.RandomTest.Components;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -19,6 +20,8 @@ builder.Services.AddBState(configuration =>
     configuration.AddBehaviour<LogBeaviour>();
     configuration.AddPreprocessor<TestPreprocessorMiddleware>();
     configuration.AddPostprocessor<TestPostprocessorMiddleware>();
+    
+    configuration.AddUseInitialize<TestCustomLifeCycle>();
 });
 
 await builder.Build().RunAsync();

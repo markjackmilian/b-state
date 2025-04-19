@@ -5,4 +5,11 @@
 
 @code {
     RandomTestState State => this.UseState<RandomTestState>();
+
+    protected override void ConfigureHooks()
+    {
+        this.UseOnInitiaze<TestCustomLifeCycle>();
+        this.UseOnAfterRenderAsync<TestCustomLifeCycle>();
+    }
+
 }
