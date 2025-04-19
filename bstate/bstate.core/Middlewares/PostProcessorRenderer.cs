@@ -6,15 +6,14 @@ namespace bstate.core.Middlewares;
 
 class PostProcessorRenderer(IComponentRegister register) : IAsyncMiddleware<IAction>
 {
-    public Task Run(IAction parameter, Func<IAction, Task> next)
+    public async Task Run(IAction parameter, Func<IAction, Task> next)
     {
         var stateType = parameter.GetType().DeclaringType;
         
         var components = register.GetComponents(stateType);
         foreach (var bStateComponent in components)
         {
-            bStateComponent.BStateRender();
+            await bStateComponent.BStateRender();
         }
-        return Task.CompletedTask;
     }
 }

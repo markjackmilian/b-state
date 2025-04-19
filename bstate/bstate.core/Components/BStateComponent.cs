@@ -18,8 +18,6 @@ public abstract partial class BStateComponent : ComponentBase, IAsyncDisposable
         ComponentRegister.Add<T>(this);
         return ServiceProvider.GetService<T>()!;
     }
-    
-    public void BStateRender() => this.StateHasChanged();
 
     public ValueTask DisposeAsync()
     {

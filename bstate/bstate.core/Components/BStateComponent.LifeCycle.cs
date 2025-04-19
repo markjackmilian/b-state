@@ -45,4 +45,26 @@ public partial class BStateComponent
         }
         await base.OnAfterRenderAsync(firstRender);
     }
+    
+    private readonly ConcurrentBag<Type> _onBStateRenders = new();
+    
+    protected void UseOnBStateRender<T>() where T : IOnBStateRender
+    {
+        _onBStateRenders.Add(typeof(T));
+    }
+    
+    private async Task InvokeOnBStateRender()
+    {
+        var instances = _onBStateRenders.Select(s => (IOnBStateRender)ServiceProvider.GetService(s));
+        foreach (var onBStateRender in instances.Where(w => w is not null))
+        {
+            await onBStateRender.OnBStateRender(this);
+        }
+    }
+    
+    public async Task BStateRender()
+    {
+        await InvokeOnBStateRender();
+        await InvokeAsync(StateHasChanged);
+    }
 }
