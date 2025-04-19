@@ -8,6 +8,8 @@ public class BStateConfiguration
 {
     public IMiddlewareRegister MiddlewareRegister { get; } = new MiddlewareRegister();
     
+    public readonly List<Type> OnInitializeList = new();
+
     public List<Assembly> LoadAssemblies { get; } = [];
 
     public BStateConfiguration RegisterFrom(params Assembly[] assemblies)
@@ -35,9 +37,16 @@ public class BStateConfiguration
         return this;
     }
     
-    public BStateConfiguration AddBeaviour<T>() where T : class, IBehaviour 
+    public BStateConfiguration AddBehaviour<T>() where T : class, IBehaviour 
     {
-        MiddlewareRegister.AddBeaviour<T>();
+        MiddlewareRegister.AddBehaviour<T>();
         return this;
     }
+    
+    public BStateConfiguration AddUseInitialize<T>() where T : class, IOnInitialize
+    {
+        this.OnInitializeList.Add(typeof(T));
+        return this;
+    }
+    
 }

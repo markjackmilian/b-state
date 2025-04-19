@@ -1,3 +1,4 @@
+@using System.Runtime.CompilerServices
 @inherits bstate.core.Components.BStateComponent
 
 <h3>Those are commands</h3>
@@ -6,6 +7,7 @@
 
 @code {
     RandomTestState State => this.UseState<RandomTestState>();
+    
     private Task SetRandomValue() => this.State.SetRandomName();
     private Task LongAction() => this.State.RunALong();
 }

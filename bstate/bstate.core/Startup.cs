@@ -34,6 +34,12 @@ public static class Startup
         
         // Register BState types from assemblies
         RegisterDiscoveredTypes(serviceCollection, assemblies);
+        
+        // Register OnInitialize types
+        foreach (var onInitializeType in configuration.OnInitializeList)
+        {
+            serviceCollection.AddTransient(onInitializeType);
+        }
     }
     
     /// <summary>

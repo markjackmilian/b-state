@@ -7,7 +7,7 @@ public interface IMiddlewareRegister
 {
     public void AddPreprocessor<T>() where T : class, IPreProcessor;
     public void AddPostprocessor<T>() where T : class, IPostProcessor;
-    public void AddBeaviour<T>() where T : class, IBehaviour;
+    public void AddBehaviour<T>() where T : class, IBehaviour;
     IEnumerable<Type> GetPreprocessors();
     IEnumerable<Type> GetPostprocessors();
     IEnumerable<Type> GetBehaviours();
@@ -30,7 +30,7 @@ class MiddlewareRegister : IMiddlewareRegister
         _postprocessors.Add(typeof(T));
     }
 
-    public void AddBeaviour<T>() where T : class, IBehaviour
+    public void AddBehaviour<T>() where T : class, IBehaviour
     {
         _beaviours.Add(typeof(T));
     }

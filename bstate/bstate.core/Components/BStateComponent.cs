@@ -1,10 +1,11 @@
+using System.Collections.Concurrent;
 using bstate.core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace bstate.core.Components;
 
-public abstract class BStateComponent : ComponentBase, IAsyncDisposable
+public abstract partial class BStateComponent : ComponentBase, IAsyncDisposable
 {
     [Inject]
     private IComponentRegister ComponentRegister { get; set; } 
@@ -17,7 +18,7 @@ public abstract class BStateComponent : ComponentBase, IAsyncDisposable
         ComponentRegister.Add<T>(this);
         return ServiceProvider.GetService<T>()!;
     }
-
+    
     public void BStateRender() => this.StateHasChanged();
 
     public ValueTask DisposeAsync()

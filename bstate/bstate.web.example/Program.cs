@@ -16,7 +16,7 @@ builder.Services.AddBState(configuration =>
 {
     configuration.RegisterFrom(Assembly.GetExecutingAssembly());
 
-    configuration.AddBeaviour<LogBeaviour>();
+    configuration.AddBehaviour<LogBeaviour>();
     configuration.AddPreprocessor<TestPreprocessorMiddleware>();
     configuration.AddPostprocessor<TestPostprocessorMiddleware>();
 });
