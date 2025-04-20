@@ -67,4 +67,38 @@ public partial class BStateComponent
         await InvokeOnBStateRender();
         await InvokeAsync(StateHasChanged);
     }
+    
+    private readonly ConcurrentBag<Type> _onDisposes = new();
+    
+    protected void UseOnDisposeAsync<T>() where T : IOnDisposeAsync
+    {
+        _onDisposes.Add(typeof(T));
+    }
+    
+    public async ValueTask DisposeAsync()
+    {
+        ComponentRegister.Clear(this);
+        var instances = _onDisposes.Select(s => (IOnDisposeAsync)ServiceProvider.GetService(s));
+        foreach (var onDispose in instances.Where(w => w is not null))
+        {
+            await onDispose.OnDisposeAsync(this);
+        }
+    }
+    
+    private readonly ConcurrentBag<Type> _onParametersSets = new();
+    
+    protected void UseOnParametersSet<T>() where T : IOnParametersSet
+    {
+        _onParametersSets.Add(typeof(T));
+    }
+    
+    protected override void OnParametersSet()
+    {
+        var instances = _onParametersSets.Select(s => (IOnParametersSet)ServiceProvider.GetService(s));
+        foreach (var onParametersSet in instances.Where(w => w is not null))
+        {
+            onParametersSet.OnParametersSet(this);
+        }
+        base.OnParametersSet();
+    }
 }

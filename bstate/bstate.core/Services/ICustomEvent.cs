@@ -15,3 +15,12 @@ public interface IOnBStateRender
 {
     Task OnBStateRender(BStateComponent component);
 }
+public interface IOnDisposeAsync
+{
+    Task OnDisposeAsync(BStateComponent component);
+}
+
+public interface IOnParametersSet
+{
+    void OnParametersSet(BStateComponent component);
+}

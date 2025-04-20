@@ -3,7 +3,7 @@ using bstate.core.Services;
 
 namespace bstate.web.example.Components.Features.RandomTest.Components;
 
-public class TestCustomLifeCycle : IOnInitialize, IOnAfterRenderAsync, IOnBStateRender
+public class TestCustomLifeCycle : IOnInitialize, IOnAfterRenderAsync, IOnBStateRender, IOnDisposeAsync, IOnParametersSet
 {
     public Task OnInitialize(BStateComponent component)
     {
@@ -21,5 +21,16 @@ public class TestCustomLifeCycle : IOnInitialize, IOnAfterRenderAsync, IOnBState
     {
         Console.WriteLine($"{component.GetType().Name} - TestCustomEvents OnBStateRender");
         return Task.CompletedTask;
+    }
+
+    public Task OnDisposeAsync(BStateComponent component)
+    {
+        Console.WriteLine($"{component.GetType().Name} - TestCustomEvents ondisposeasync");
+        return Task.CompletedTask;
+    }
+
+    public void OnParametersSet(BStateComponent component)
+    {
+        Console.WriteLine($"{component.GetType().Name} - TestCustomEvents onparametersset");
     }
 }

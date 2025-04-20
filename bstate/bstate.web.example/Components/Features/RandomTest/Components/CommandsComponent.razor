@@ -15,6 +15,7 @@
         this.UseOnInitiaze<TestCustomLifeCycle>();
         this.UseOnAfterRenderAsync<TestCustomLifeCycle>();
         this.UseOnBStateRender<TestCustomLifeCycle>();
+        this.UseOnDisposeAsync<TestCustomLifeCycle>();
     }
 
     private Task SetRandomValue() => this.State.SetRandomName();

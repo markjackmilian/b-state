@@ -18,10 +18,4 @@ public abstract partial class BStateComponent : ComponentBase, IAsyncDisposable
         ComponentRegister.Add<T>(this);
         return ServiceProvider.GetService<T>()!;
     }
-
-    public ValueTask DisposeAsync()
-    {
-        ComponentRegister.Clear(this);
-        return ValueTask.CompletedTask;
-    }
 }
