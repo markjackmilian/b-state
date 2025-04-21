@@ -6,11 +6,11 @@ namespace bstate.core.Components;
 
 public partial class BStateComponent
 {
-    protected virtual void ConfigureHooks(){}
+    protected virtual void ConfigureCustomLifeCycle(){}
 
     protected override void OnInitialized()
     {
-        this.ConfigureHooks();
+        this.ConfigureCustomLifeCycle();
         base.OnInitialized();
     }
     

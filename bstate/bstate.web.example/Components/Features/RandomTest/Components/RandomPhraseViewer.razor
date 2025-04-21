@@ -6,7 +6,7 @@
 @code {
     RandomTestState State => this.UseState<RandomTestState>();
 
-    protected override void ConfigureHooks()
+    protected override void ConfigureCustomLifeCycle()
     {
         this.UseOnInitiaze<TestCustomLifeCycle>();
         this.UseOnAfterRenderAsync<TestCustomLifeCycle>();

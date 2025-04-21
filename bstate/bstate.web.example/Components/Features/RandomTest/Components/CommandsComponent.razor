@@ -10,7 +10,7 @@
     RandomTestState State => this.UseState<RandomTestState>();
     //BStateComponent TestOnInitalize => this.UseOnInitiaze<TestCustomHooks>();
 
-    protected override void ConfigureHooks()
+    protected override void ConfigureCustomLifeCycle()
     {
         this.UseOnInitiaze<TestCustomLifeCycle>();
         this.UseOnAfterRenderAsync<TestCustomLifeCycle>();

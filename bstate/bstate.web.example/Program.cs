@@ -8,6 +8,7 @@ using bstate.web.example;
 using bstate.web.example.Components.Features;
 using bstate.web.example.Components.Features.RandomTest;
 using bstate.web.example.Components.Features.RandomTest.Components;
+using bstate.web.example.Features.Weather;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -27,6 +28,8 @@ builder.Services.AddBState(configuration =>
     configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
 
     configuration.Services.AddTransient<TestCustomLifeCycle>();
+    
+    configuration.Services.AddTransient<WeatherInitialize>();
 });
 
 
