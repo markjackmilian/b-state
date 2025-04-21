@@ -15,8 +15,4 @@
       <ProjectReference Include="..\bstate.core\bstate.core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Components\Features\" />
-    </ItemGroup>
-
 </Project>

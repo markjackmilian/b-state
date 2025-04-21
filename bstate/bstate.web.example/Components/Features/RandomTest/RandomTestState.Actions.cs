@@ -5,7 +5,7 @@ namespace bstate.web.example.Components.Features.RandomTest;
 
 internal partial class RandomTestState
 {
-    record RunALongAction : IAction;
+    record RunALongAction : IAction, IsLongAction;
     public Task RunALong() => this.Channel.Send(new RunALongAction());
 
     record SetRandomNameAction : IAction;

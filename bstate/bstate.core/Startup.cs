@@ -64,11 +64,16 @@ public static class Startup
     /// </summary>
     private static void RegisterMiddlewares(IServiceCollection serviceCollection, BStateConfiguration configuration)
     {
-        // Register preprocessors
-        foreach (var preprocessorType in configuration.MiddlewareRegister.GetPreprocessors())
+        foreach (var preprocessorServiceDescriptor in configuration.RequestPreProcessorsToRegister)
         {
-            serviceCollection.AddTransient(preprocessorType);
+            serviceCollection.Add(preprocessorServiceDescriptor);       
         }
+        
+        // // Register preprocessors
+        // foreach (var preprocessorType in configuration.MiddlewareRegister.GetPreprocessors())
+        // {
+        //     serviceCollection.AddTransient(preprocessorType);
+        // }
         
         // Register postprocessors
         foreach (var postprocessorType in configuration.MiddlewareRegister.GetPostprocessors())

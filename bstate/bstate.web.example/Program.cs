@@ -4,6 +4,7 @@ using bstate.core.Classes;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using bstate.web.example;
+using bstate.web.example.Components.Features;
 using bstate.web.example.Components.Features.RandomTest;
 using bstate.web.example.Components.Features.RandomTest.Components;
 
@@ -19,6 +20,10 @@ builder.Services.AddBState(configuration =>
 
     configuration.AddBehaviour<LogBeaviour>();
     configuration.AddPreprocessor<TestPreprocessorMiddleware>();
+    configuration.AddGenericPreprocessor<TestPreprocessorGeneric, IAction>();
+    configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
+    //configuration.AddGenericPreprocessor<TestPreprocessorOnlyLongGeneric<IsLongAction>, IsLongAction>();
+    
     configuration.AddPostprocessor<TestPostprocessorMiddleware>();
     
     configuration.AddUseInitialize<TestCustomLifeCycle>();
