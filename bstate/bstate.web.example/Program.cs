@@ -3,8 +3,7 @@ using bstate.core;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using bstate.web.example;
-using bstate.web.example.Features;
-using bstate.web.example.Features.Weather;
+using bstate.web.example.Pipeline;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

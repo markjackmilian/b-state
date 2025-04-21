@@ -7,4 +7,10 @@
 @code {
     CounterState State => this.UseState<CounterState>();
     private Task IncrementCount() => this.State.IncreaseCounter();
+
+    protected override void ConfigureCustomLifeCycle()
+    {
+        this.UseOnBStateRender<CounterOnRender>();
+    }
+
 }

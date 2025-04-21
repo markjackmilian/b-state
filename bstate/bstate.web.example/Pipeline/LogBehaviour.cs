@@ -1,7 +1,7 @@
 using bstate.core.Classes;
 using bstate.core.Middlewares;
 
-namespace bstate.web.example.Features;
+namespace bstate.web.example.Pipeline;
 
 class LogBehaviour : IBehaviour
 {
