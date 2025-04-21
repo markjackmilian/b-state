@@ -23,7 +23,7 @@ builder.Services.AddBState(configuration =>
     // configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
     // configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
     
-    configuration.Services.AddTransient<WeatherInitialize>();
+    // configuration.Services.AddTransient<WeatherInitialize>();
 });
 
 

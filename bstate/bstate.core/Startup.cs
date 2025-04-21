@@ -3,6 +3,7 @@ using System.Reflection;
 using bstate.core.Classes;
 using bstate.core.Middlewares;
 using bstate.core.Services;
+using bstate.core.Services.Lifecycle;
 
 namespace bstate.core;
 
@@ -82,7 +83,24 @@ public static class Startup
     {
         RegisterStates(serviceCollection, assemblies);
         RegisterActionHandlers(serviceCollection, assemblies);
+        RegisterLifeCycles(serviceCollection, assemblies);
     }
+
+private static void RegisterLifeCycles(IServiceCollection serviceCollection, Assembly[] assemblies)
+{
+    // Find all non-abstract classes that implement ILifeCycle
+    var lifeCycleTypes = assemblies
+        .SelectMany(a => a.GetTypes())
+        .Where(t => t is { IsClass: true, IsAbstract: false } 
+                    && t.GetInterfaces()
+                        .Any(i => i == typeof(ILifeCycle) || 
+                             (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ILifeCycle))));
+                             
+    foreach (var lifeCycleType in lifeCycleTypes)
+    {
+        serviceCollection.AddTransient(lifeCycleType);
+    }
+}
 
     /// <summary>
     /// Finds and registers all IActionHandler implementations from the provided assemblies.

@@ -2,7 +2,7 @@ using bstate.core.Components;
 
 namespace bstate.core.Services.Lifecycle;
 
-public interface IOnDisposeAsync
+public interface IOnDisposeAsync : ILifeCycle
 {
     Task OnDisposeAsync(BStateComponent component);
 }
