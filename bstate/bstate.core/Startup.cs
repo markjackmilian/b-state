@@ -44,7 +44,7 @@ public static class Startup
         // Register singleton services
         serviceCollection.AddSingleton<IComponentRegister, ComponentRegister>();
         serviceCollection.AddSingleton<IStore, Store>();
-        serviceCollection.AddSingleton<IBus, Bus>();
+        serviceCollection.AddSingleton<IActionBus, ActionBus>();
         
         // Register transient services
         serviceCollection.AddTransient<ActionRunnerMiddleware>();
