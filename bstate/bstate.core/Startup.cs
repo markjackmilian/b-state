@@ -69,16 +69,9 @@ public static class Startup
             serviceCollection.Add(preprocessorServiceDescriptor);       
         }
         
-        // // Register preprocessors
-        // foreach (var preprocessorType in configuration.MiddlewareRegister.GetPreprocessors())
-        // {
-        //     serviceCollection.AddTransient(preprocessorType);
-        // }
-        
-        // Register postprocessors
-        foreach (var postprocessorType in configuration.MiddlewareRegister.GetPostprocessors())
+        foreach (var preprocessorServiceDescriptor in configuration.RequestPostProcessorsToRegister)
         {
-            serviceCollection.AddTransient(postprocessorType);
+            serviceCollection.Add(preprocessorServiceDescriptor);       
         }
         
         // Register beaviours

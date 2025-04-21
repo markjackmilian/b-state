@@ -19,12 +19,12 @@ builder.Services.AddBState(configuration =>
     configuration.RegisterFrom(Assembly.GetExecutingAssembly());
 
     configuration.AddBehaviour<LogBeaviour>();
-    configuration.AddPreprocessor<TestPreprocessorMiddleware>();
-    configuration.AddGenericPreprocessor<TestPreprocessorGeneric, IAction>();
-    configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
-    //configuration.AddGenericPreprocessor<TestPreprocessorOnlyLongGeneric<IsLongAction>, IsLongAction>();
     
-    configuration.AddPostprocessor<TestPostprocessorMiddleware>();
+    
+    configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorGeneric<>));
+    configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
+    configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
+    
     
     configuration.AddUseInitialize<TestCustomLifeCycle>();
 });

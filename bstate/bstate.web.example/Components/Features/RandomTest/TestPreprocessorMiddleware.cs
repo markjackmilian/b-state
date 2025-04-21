@@ -4,7 +4,8 @@ using bstate.core.Middlewares;
 namespace bstate.web.example.Components.Features.RandomTest;
 
 
-public class TestPreprocessorGeneric : IPreProcessorGeneric<IAction>
+public class TestPreprocessorGeneric<T> : IPreProcessorGeneric<T>
+where T : IAction
 {
     public Task Run(IAction parameter)
     {
@@ -22,16 +23,10 @@ public class TestPreprocessorOnlyLongGeneric<TAction> : IPreProcessorGeneric<TAc
         return Task.CompletedTask;
     }
 }
-public class TestPreprocessorMiddleware : IPreProcessor
-{
-    public Task Run(IAction parameter)
-    {
-        Console.WriteLine("TestPreprocessorMiddleware");
-        return Task.CompletedTask;
-    }
-}
 
-public class TestPostprocessorMiddleware : IPostProcessor
+
+public class TestPostprocessorMiddleware<T> : IPostProcessorGeneric<T>
+where T : IAction
 {
     public Task Run(IAction parameter)
     {
