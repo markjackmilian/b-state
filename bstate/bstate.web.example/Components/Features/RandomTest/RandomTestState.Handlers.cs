@@ -11,7 +11,8 @@ internal partial class RandomTestState
     
     class SetRandomNameActionHandler(IStore store) : ActionHandler<SetRandomNameAction>(store)
     {
-        RandomTestState State => store.Get<RandomTestState>();
+        private readonly IStore _store = store;
+        RandomTestState State => _store.Get<RandomTestState>();
         public override Task Execute(SetRandomNameAction request)
         {
             State.Name = State.GetRandomName();
@@ -24,7 +25,8 @@ internal partial class RandomTestState
 {
     class SetNameActionHandler(IStore store) : ActionHandler<SetNameAction>(store)
     {
-        RandomTestState State => store.Get<RandomTestState>();
+        private readonly IStore _store = store;
+        RandomTestState State => _store.Get<RandomTestState>();
         public override Task Execute(SetNameAction request)
         {
             State.Name = request.Name;
@@ -38,7 +40,8 @@ internal partial class RandomTestState
 {
     class SetIsLoadingActionHandler(IStore store) : ActionHandler<SetIsLoadingAction>(store)
     {
-        private RandomTestState State => store.Get<RandomTestState>();
+        private readonly IStore _store = store;
+        private RandomTestState State => _store.Get<RandomTestState>();
         public override Task Execute(SetIsLoadingAction request)
         {
             State.IsLoading = request.IsLoading;
@@ -52,7 +55,8 @@ internal partial class RandomTestState
 {
     class RunALongActionHandler(IStore store) : ActionHandler<RunALongAction>(store)
     {
-        RandomTestState State => store.Get<RandomTestState>();
+        private readonly IStore _store = store;
+        RandomTestState State => _store.Get<RandomTestState>();
         public override async Task Execute(RunALongAction request)
         {
             await State.SetIsLoading(true);

@@ -19,7 +19,7 @@ public static class Startup
     public static void AddBState(this IServiceCollection serviceCollection, Action<BStateConfiguration> builder)
     {
         // Configure BState
-        var configuration = new BStateConfiguration();
+        var configuration = new BStateConfiguration(serviceCollection);
         builder(configuration);
         serviceCollection.AddSingleton(configuration);
         
@@ -34,12 +34,6 @@ public static class Startup
         
         // Register BState types from assemblies
         RegisterDiscoveredTypes(serviceCollection, assemblies);
-        
-        // Register OnInitialize types
-        foreach (var onInitializeType in configuration.OnInitializeList)
-        {
-            serviceCollection.AddTransient(onInitializeType);
-        }
     }
     
     /// <summary>
@@ -75,7 +69,7 @@ public static class Startup
         }
         
         // Register beaviours
-        foreach (var postprocessorType in configuration.MiddlewareRegister.GetBehaviours())
+        foreach (var postprocessorType in configuration.BehaviourRegister.GetBehaviours())
         {
             serviceCollection.AddTransient(postprocessorType);
         }

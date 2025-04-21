@@ -5,13 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace bstate.core.Classes;
 
-public class BStateConfiguration
+public class BStateConfiguration(IServiceCollection services)
 {
-    public IMiddlewareRegister MiddlewareRegister { get; } = new MiddlewareRegister();
-    
-    public readonly List<Type> OnInitializeList = new();
-
+    public IBehaviourRegister BehaviourRegister { get; } = new BehaviourRegister();
     public List<Assembly> LoadAssemblies { get; } = [];
+    
+    public IServiceCollection Services => services;
 
     public BStateConfiguration RegisterFrom(params Assembly[] assemblies)
     {
@@ -75,14 +74,9 @@ public class BStateConfiguration
     
     public BStateConfiguration AddBehaviour<T>() where T : class, IBehaviour 
     {
-        MiddlewareRegister.AddBehaviour<T>();
+        BehaviourRegister.AddBehaviour<T>();
         return this;
     }
     
-    public BStateConfiguration AddUseInitialize<T>() where T : class, IOnInitialize
-    {
-        this.OnInitializeList.Add(typeof(T));
-        return this;
-    }
     
 }

@@ -1,6 +1,7 @@
 using System.Reflection;
 using bstate.core;
 using bstate.core.Classes;
+using bstate.core.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using bstate.web.example;
@@ -24,9 +25,11 @@ builder.Services.AddBState(configuration =>
     configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorGeneric<>));
     configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
     configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
-    
-    
-    configuration.AddUseInitialize<TestCustomLifeCycle>();
+
+    configuration.Services.AddTransient<TestCustomLifeCycle>();
 });
+
+
+
 
 await builder.Build().RunAsync();

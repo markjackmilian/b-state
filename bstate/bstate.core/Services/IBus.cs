@@ -16,7 +16,7 @@ class Bus(IServiceProvider serviceProvider, BStateConfiguration configuration) :
     public async Task Send(IAction action)
     {
         var pipeline = new PipelineBuilder(serviceProvider)
-            .AddBeaviours(configuration.MiddlewareRegister.GetBehaviours())
+            .AddBeaviours(configuration.BehaviourRegister.GetBehaviours())
             .AddPreprocessors()
             .AddActionRunner()
             .AddPostprocessors()

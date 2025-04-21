@@ -4,13 +4,13 @@ using bstate.core.Middlewares;
 
 namespace bstate.core.Services;
 
-public interface IMiddlewareRegister
+public interface IBehaviourRegister
 {
     public void AddBehaviour<T>() where T : class, IBehaviour;
     IEnumerable<Type> GetBehaviours();
 }
 
-class MiddlewareRegister : IMiddlewareRegister
+class BehaviourRegister : IBehaviourRegister
 {
     private readonly ConcurrentBag<Type> _beaviours = new();
 
