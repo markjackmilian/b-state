@@ -1,0 +1,10 @@
+@using bstate.web.example.Features.Counter
+@inherits bstate.core.Components.BStateComponent
+
+<p role="status">Current count: @State.Count</p>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    CounterState State => this.UseState<CounterState>();
+    private Task IncrementCount() => this.State.IncreaseCounter();
+}

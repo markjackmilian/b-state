@@ -4,11 +4,11 @@ namespace bstate.core;
 
 public abstract class BState
 {
-    protected IActionBus Channel { get; }
+    protected IActionBus ActionChannel { get; }
 
-    protected BState(IActionBus channel)
+    protected BState(IActionBus actionChannel)
     {
-        Channel = channel;
+        ActionChannel = actionChannel;
         this.Initialize();
     }
     protected abstract void Initialize();
