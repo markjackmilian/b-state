@@ -46,7 +46,7 @@ public class BStateConfiguration(IServiceCollection services)
 
         return this;
     }
-    public List<ServiceDescriptor> RequestPreProcessorsToRegister { get; set; } = new();
+    public List<ServiceDescriptor> RequestPreProcessorsToRegister { get; set; } = [];
     public BStateConfiguration AddOpenRequestPostProcessor(Type openBehaviorType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
         if (!openBehaviorType.IsGenericType)
@@ -70,7 +70,7 @@ public class BStateConfiguration(IServiceCollection services)
         return this;
     }
 
-    public List<ServiceDescriptor> RequestPostProcessorsToRegister { get; set; } = new();
+    public List<ServiceDescriptor> RequestPostProcessorsToRegister { get; set; } = [];
     
     public BStateConfiguration AddBehaviour<T>() where T : class, IBehaviour 
     {

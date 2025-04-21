@@ -12,7 +12,7 @@ public interface IBehaviourRegister
 
 class BehaviourRegister : IBehaviourRegister
 {
-    private readonly ConcurrentBag<Type> _beaviours = new();
+    private readonly ConcurrentBag<Type> _beaviours = [];
 
     public void AddBehaviour<T>() where T : class, IBehaviour
     {

@@ -6,7 +6,8 @@ namespace bstate.web.example.Components.Features.RandomTest;
 
 internal partial class RandomTestState
 {
-    private string[] Names = new[] {"Cavallo", "Pippo", "Pluto", "Paperino", "Topolino", "Minnie", "Qui", "Quo", "Qua", "Rockerduck", "Gastone", "Paperoga", "Archimede", "Brigitta", "Basettoni", "Gambadilegno", "Macchia Nera", "Amelia", "Paperone", "Trudy"};
+    private string[] Names = ["Cavallo", "Pippo", "Pluto", "Paperino", "Topolino", "Minnie", "Qui", "Quo", "Qua", "Rockerduck", "Gastone", "Paperoga", "Archimede", "Brigitta", "Basettoni", "Gambadilegno", "Macchia Nera", "Amelia", "Paperone", "Trudy"
+    ];
     private string GetRandomName() => Names[new Random().Next(0, Names.Length)];
     
     class SetRandomNameActionHandler(IStore store) : ActionHandler<SetRandomNameAction>(store)

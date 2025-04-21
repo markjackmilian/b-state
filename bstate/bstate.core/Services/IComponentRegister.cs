@@ -27,7 +27,7 @@ internal sealed class ComponentRegister : IComponentRegister
         {
             if (!_stateComponents.TryGetValue(stateType, out var components))
             {
-                components = new HashSet<BStateComponent>();
+                components = [];
                 _stateComponents[stateType] = components;
             }
 

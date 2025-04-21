@@ -14,7 +14,7 @@ public partial class BStateComponent
         base.OnInitialized();
     }
     
-    private readonly ConcurrentBag<Type> _onInitializes = new();
+    private readonly ConcurrentBag<Type> _onInitializes = [];
     
     protected void UseOnInitiaze<T>() where T : IOnInitialize
     {
@@ -30,7 +30,7 @@ public partial class BStateComponent
         await base.OnInitializedAsync();
     }
     
-    private readonly ConcurrentBag<Type> _onAfterRenders = new();
+    private readonly ConcurrentBag<Type> _onAfterRenders = [];
     
     protected void UseOnAfterRenderAsync<T>() where T : IOnAfterRenderAsync
     {
@@ -47,7 +47,7 @@ public partial class BStateComponent
         await base.OnAfterRenderAsync(firstRender);
     }
     
-    private readonly ConcurrentBag<Type> _onBStateRenders = new();
+    private readonly ConcurrentBag<Type> _onBStateRenders = [];
     
     protected void UseOnBStateRender<T>() where T : IOnBStateRender
     {
@@ -69,7 +69,7 @@ public partial class BStateComponent
         await InvokeAsync(StateHasChanged);
     }
     
-    private readonly ConcurrentBag<Type> _onDisposes = new();
+    private readonly ConcurrentBag<Type> _onDisposes = [];
     
     protected void UseOnDisposeAsync<T>() where T : IOnDisposeAsync
     {
@@ -86,7 +86,7 @@ public partial class BStateComponent
         }
     }
     
-    private readonly ConcurrentBag<Type> _onParametersSets = new();
+    private readonly ConcurrentBag<Type> _onParametersSets = [];
     
     protected void UseOnParametersSet<T>() where T : IOnParametersSet
     {
