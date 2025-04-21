@@ -15,6 +15,7 @@ builder.Services.AddBState(configuration =>
 {
     configuration.RegisterFrom(Assembly.GetExecutingAssembly());
 
+    configuration.AddBehaviour<ExceptionBehaviour>();
     configuration.AddBehaviour<LogBehaviour>();
     
     
