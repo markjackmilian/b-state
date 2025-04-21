@@ -8,13 +8,11 @@ public partial class WeatherState
 {
     record SetForecastAction(IEnumerable<WeatherForecast> Forecasts) : IAction;
 
-    class SetForecastActionHandler(IStore store) : ActionHandler<SetForecastAction>(store)
+    class SetForecastActionHandler(WeatherState weatherState) : IActionHandler<SetForecastAction>
     {
-        private readonly IStore _store = store;
-        WeatherState State => _store.Get<WeatherState>();
-        public override Task Execute(SetForecastAction request)
+        public Task Execute(SetForecastAction request)
         {
-            this.State.Forecasts = request.Forecasts;
+            weatherState.Forecasts = request.Forecasts;
             return Task.CompletedTask;
         }
     }

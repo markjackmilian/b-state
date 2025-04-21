@@ -6,9 +6,9 @@ using bstate.web.example.Pages.Weather.Models;
 
 namespace bstate.web.example.Features.Weather;
 
-class WeatherInitialize(HttpClient httpClient, IStore store) : IOnInitialize
+class WeatherInitialize(HttpClient httpClient, WeatherState state) : IOnInitialize
 {
-    private WeatherState State => store.Get<WeatherState>();
+    private WeatherState State => state;
     public async Task OnInitialize(BStateComponent component)
     {
         await Task.Delay(2000); // simulate async call ( fetch data from server)

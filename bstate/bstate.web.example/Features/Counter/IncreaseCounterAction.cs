@@ -7,14 +7,11 @@ public partial class CounterState
 {
     record IncreaseCounterAction : IAction;
 
-    class IncreaseCounterActionHandler(IStore store) : ActionHandler<IncreaseCounterAction>(store)
+    class IncreaseCounterActionHandler(CounterState counterState) : IActionHandler<IncreaseCounterAction>
     {
-        private readonly IStore _store = store;
-        private CounterState State => _store.Get<CounterState>();
-        
-        public override Task Execute(IncreaseCounterAction request)
+        public Task Execute(IncreaseCounterAction request)
         {
-            this.State.Count++;
+            counterState.Count++;
             return Task.CompletedTask;
         }
     }

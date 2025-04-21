@@ -1,13 +1,9 @@
 using System.Reflection;
 using bstate.core;
-using bstate.core.Classes;
-using bstate.core.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using bstate.web.example;
-using bstate.web.example.Components.Features;
-using bstate.web.example.Components.Features.RandomTest;
-using bstate.web.example.Components.Features.RandomTest.Components;
+using bstate.web.example.Features;
 using bstate.web.example.Features.Weather;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -20,14 +16,12 @@ builder.Services.AddBState(configuration =>
 {
     configuration.RegisterFrom(Assembly.GetExecutingAssembly());
 
-    configuration.AddBehaviour<LogBeaviour>();
+    configuration.AddBehaviour<LogBehaviour>();
     
     
-    configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorGeneric<>));
-    configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
-    configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
-
-    configuration.Services.AddTransient<TestCustomLifeCycle>();
+    // configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorGeneric<>));
+    // configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
+    // configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
     
     configuration.Services.AddTransient<WeatherInitialize>();
 });
