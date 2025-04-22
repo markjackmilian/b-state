@@ -11,7 +11,9 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.3" PrivateAssets="all"/>
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup>        
+      <ProjectReference Include="..\bstate.analyzer\bstate.analyzer\bstate.analyzer.csproj"
+                        OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
       <ProjectReference Include="..\bstate.core\bstate.core.csproj" />
     </ItemGroup>
 
