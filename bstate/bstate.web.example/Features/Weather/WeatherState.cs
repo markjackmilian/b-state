@@ -1,4 +1,5 @@
 using bstate.core;
+using bstate.core.Classes;
 using bstate.core.Services;
 using bstate.web.example.Pages.Weather.Models;
 
@@ -10,6 +11,8 @@ public partial class WeatherState(IActionBus actionChannel) : BState(actionChann
 
     protected override void Initialize()
     {
-        
     }
+    
+    record SetForecastAction(IEnumerable<WeatherForecast> Forecasts) : IAction;
+
 }

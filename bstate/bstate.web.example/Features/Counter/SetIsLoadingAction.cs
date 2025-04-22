@@ -4,7 +4,6 @@ namespace bstate.web.example.Features.Counter;
 
 public partial class CounterState
 {
-    record SetIsLoadingAction(bool IsLoading) : IAction;
     
     class SetIsLoadingActionHandler(CounterState counterState) : IActionHandler<SetIsLoadingAction>
     {

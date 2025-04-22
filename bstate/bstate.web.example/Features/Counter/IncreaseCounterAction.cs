@@ -5,7 +5,6 @@ namespace bstate.web.example.Features.Counter;
 
 public partial class CounterState
 {
-    record IncreaseCounterAction : IAction;
 
     class IncreaseCounterActionHandler(CounterState counterState) : IActionHandler<IncreaseCounterAction>
     {

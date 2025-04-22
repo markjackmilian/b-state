@@ -6,7 +6,6 @@ namespace bstate.web.example.Features.Weather;
 
 public partial class WeatherState
 {
-    record SetForecastAction(IEnumerable<WeatherForecast> Forecasts) : IAction;
 
     class SetForecastActionHandler(WeatherState weatherState) : IActionHandler<SetForecastAction>
     {
