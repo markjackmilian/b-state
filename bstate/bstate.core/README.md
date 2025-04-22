@@ -166,9 +166,21 @@ BState processes actions through a pipeline with these stages:
 4. **Postprocessors**: Run in the order registered after the action completes
 5. **Renderer**: Updates the UI automatically for affected components
 
-## Examples
+## Lifecycle Hooks
 
-Find more examples in the [BState.Samples](https://github.com/markjackmilian/b-state/tree/main/bstate/bstate.web.example) repository.
+BState provides lifecycle hooks that allow you to execute code at specific points in a component's lifecycle. Implement these interfaces in your services to hook into the BStateComponent lifecycle:
+
+### Available Lifecycle Interfaces
+
+- **IOnInitialize**: Executes when a component is initialized
+- **IOnParametersSet**: Executes when component parameters are set
+- **IOnBStateRender**: Executes when a component is about to render
+- **IOnAfterRenderAsync**: Executes after a component has rendered
+- **IOnDisposeAsync**: Executes when a component is being disposed
+
+### Using Lifecycle Hooks
+
+To use these hooks, create a service that implements one or more of these interfaces:
 
 ## Contributing
 
