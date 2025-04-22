@@ -8,6 +8,7 @@
 
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
+        <AnalyzerReleaseTracking>Enabled</AnalyzerReleaseTracking>
 
         <RootNamespace>bstate.analyzer</RootNamespace>
         <AssemblyName>bstate.analyzer</AssemblyName>

@@ -18,4 +18,8 @@
         <PackageReference Include="PipelineNet.ServiceProvider" Version="0.11.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\bstate.analyzer\bstate.analyzer\bstate.analyzer.csproj" />
+    </ItemGroup>
+
 </Project>

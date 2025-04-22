@@ -6,7 +6,7 @@ public partial class CounterState
 {
     record JustThrowExceptionAction : IAction;
 
-    class JustThrowExceptionActionHandler(CounterState counterState) : IActionHandler<JustThrowExceptionAction>
+    class JustThrowExceptionActionHandler : IActionHandler<JustThrowExceptionAction>
     {
         public Task Execute(JustThrowExceptionAction request)
         {
