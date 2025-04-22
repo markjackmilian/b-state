@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bstate.analyzer", "bstate.a
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bstate.analyzer.Sample", "bstate.analyzer\bstate.analyzer.Sample\bstate.analyzer.Sample.csproj", "{05D75EF8-B097-428F-96EF-92C6897DBFE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bstate.analyzer.Tests", "bstate.analyzer\bstate.analyzer.Tests\bstate.analyzer.Tests.csproj", "{94F57590-818E-41EB-9069-9DD3D7C8DEAD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,14 +32,9 @@ Global
 		{05D75EF8-B097-428F-96EF-92C6897DBFE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05D75EF8-B097-428F-96EF-92C6897DBFE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05D75EF8-B097-428F-96EF-92C6897DBFE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94F57590-818E-41EB-9069-9DD3D7C8DEAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94F57590-818E-41EB-9069-9DD3D7C8DEAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94F57590-818E-41EB-9069-9DD3D7C8DEAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94F57590-818E-41EB-9069-9DD3D7C8DEAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C13EB491-B0B3-48CA-BFAA-EA85ACEF7EE0} = {AE8CC686-612A-4BF9-BCE5-C9FFD08935CC}
 		{05D75EF8-B097-428F-96EF-92C6897DBFE6} = {AE8CC686-612A-4BF9-BCE5-C9FFD08935CC}
-		{94F57590-818E-41EB-9069-9DD3D7C8DEAD} = {AE8CC686-612A-4BF9-BCE5-C9FFD08935CC}
 	EndGlobalSection
 EndGlobal

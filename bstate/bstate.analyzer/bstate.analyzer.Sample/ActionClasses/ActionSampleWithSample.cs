@@ -1,7 +1,7 @@
 using bstate.core;
 using bstate.core.Classes;
 
-namespace bstate.analyzer.Sample;
+namespace bstate.analyzer.Sample.ActionClasses;
 
 public class ActionSampleWithSample
 {
