@@ -8,7 +8,7 @@ class PostProcessorRunnerMiddleware(IServiceProvider serviceProvider) : IAsyncMi
 {
     public async Task Run(IAction parameter, Func<IAction, Task> next)
     {
-        var genericType = typeof(IPostProcessorGeneric<>).MakeGenericType(parameter.GetType());
+        var genericType = typeof(IPostProcessor<>).MakeGenericType(parameter.GetType());
         var preProcessors = (IAbstractProcessor[])serviceProvider.GetServices(genericType);
         
         foreach (var preprocessor in preProcessors)

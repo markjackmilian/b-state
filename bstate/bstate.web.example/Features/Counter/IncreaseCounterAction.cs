@@ -5,7 +5,6 @@ namespace bstate.web.example.Features.Counter;
 
 public partial class CounterState
 {
-
     class IncreaseCounterActionHandler(CounterState counterState) : IActionHandler<IncreaseCounterAction>
     {
         public Task Execute(IncreaseCounterAction request)

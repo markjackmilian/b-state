@@ -32,11 +32,11 @@ public class BStateConfiguration(IServiceCollection services)
         }
 
         var implementedGenericInterfaces = openBehaviorType.GetInterfaces().Where(i => i.IsGenericType).Select(i => i.GetGenericTypeDefinition());
-        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(IPreProcessorGeneric<>)));
+        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(IPreProcessor<>)));
 
         if (implementedOpenBehaviorInterfaces.Count == 0)
         {
-            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(IPreProcessorGeneric<>).FullName}");
+            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(IPreProcessor<>).FullName}");
         }
 
         foreach (var openBehaviorInterface in implementedOpenBehaviorInterfaces)
@@ -55,11 +55,11 @@ public class BStateConfiguration(IServiceCollection services)
         }
 
         var implementedGenericInterfaces = openBehaviorType.GetInterfaces().Where(i => i.IsGenericType).Select(i => i.GetGenericTypeDefinition());
-        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(IPostProcessorGeneric<>)));
+        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(IPostProcessor<>)));
 
         if (implementedOpenBehaviorInterfaces.Count == 0)
         {
-            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(IPostProcessorGeneric<>).FullName}");
+            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(IPostProcessor<>).FullName}");
         }
 
         foreach (var openBehaviorInterface in implementedOpenBehaviorInterfaces)

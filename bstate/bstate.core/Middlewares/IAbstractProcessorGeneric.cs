@@ -11,8 +11,8 @@ public interface IAbstractProcessorGeneric<in T> : IAbstractProcessor where T : 
 {
 }
 
-public interface IPreProcessorGeneric<in T> :IAbstractProcessorGeneric<T> 
+public interface IPreProcessor<in T> :IAbstractProcessorGeneric<T> 
 { }
 
-public interface IPostProcessorGeneric<in T> : IAbstractProcessorGeneric<T> 
+public interface IPostProcessor<in T> : IAbstractProcessorGeneric<T> 
 { }
