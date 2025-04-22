@@ -1,154 +1,179 @@
-# BState - State Management for Blazor Applications
+# BState - Advanced State Management for Blazor
 
-BState is a lightweight state management library designed specifically for Blazor applications. It provides a clean and efficient way to manage application state with a middleware pipeline architecture.
+BState is a powerful state management library designed specifically for Blazor applications. It provides a clean, efficient way to manage application state through a flexible pipeline architecture.
 
-## Features
+## Key Features
 
-- **Pipeline Architecture**: Uses a middleware pipeline for processing actions
-- **Component Auto-Rendering**: Automatically re-renders components when state changes
-- **Middleware Support**: Pre-processing and post-processing middleware capabilities
-- **Type-Safe Actions**: Strongly-typed action handlers
+- **Pipeline Architecture**: Process actions through customizable middleware pipelines
+- **Pre/Post Processors**: Intercept and transform actions before and after processing
+- **Behaviors**: Implement cross-cutting concerns with reusable behaviors
+- **Automatic UI Updates**: Components automatically re-render when their state changes
+- **Type-Safe Actions**: Strongly-typed action handlers for compile-time safety
 
 ## Getting Started
 
-### 1. Define your state class
+### Installation
+
+```bash
+dotnet add package BState.Core
+```
+
+### Register Services
+Auto registration will register all actions and all lifecycle services. Preprocessors, PostProcessors, and Behaviors should be registered manually because their order matters
+```csharp
+// In Program.cs or Startup.cs
+builder.Services.AddBState(configuration =>
+{
+    // Register handlers from the current assembly
+    configuration.RegisterFrom(Assembly.GetExecutingAssembly());
+
+    // Register behaviors
+    configuration.AddBehaviour<ExceptionBehaviour>();
+    configuration.AddBehaviour<LogBehaviour>();
+    
+    // Register preprocessors
+    configuration.AddOpenRequestPreProcessor(typeof(AllRequestPreprocessor<>));
+    configuration.AddOpenRequestPreProcessor(typeof(ALongActionPreProcessor<>));
+    
+    // Uncomment to register postprocessors
+    // configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
+});
+
+```
+
+### Define Your State
 
 ```csharp
-public class CounterState : BState
+public partial class CounterState(IActionBus actionChannel) : BState(actionChannel)
 {
-    private int _count = 0;
-    public int Count => _count;
-
-    public CounterState(IActionChannel runner) : base(runner) { }
-    
+    public int Count { get; private set; }
+    public bool IsLoading { get; private set; }
     protected override void Initialize()
     {
-        // Initialize state if needed
+        this.Count = 100; // init to 100 for some business rules :)
     }
     
-    // Define actions
-    public record Increment : IAction;
-    public record Decrement : IAction;
+    // Define your actions as nested types
+    record IncreaseCounterAction : IAction;
+    record DecreaseCounterAction : IAction, ILongAction;
+    record SetIsLoadingAction(bool IsLoading) : IAction;
 }
 ```
 
-### 2. Create action handlers
+### Create Action Handlers
 
 ```csharp
-public class IncrementHandler : ActionHandler<CounterState.Increment>
+public partial class CounterState
 {
-    private readonly CounterState _state;
-    
-    public IncrementHandler(IStore store, CounterState state) : base(store)
+    class IncreaseCounterActionHandler(CounterState counterState) : IActionHandler<IncreaseCounterAction>
     {
-        _state = state;
+        public Task Execute(IncreaseCounterAction request)
+        {
+            counterState.Count++;
+            return Task.CompletedTask;
+        }
     }
     
-    public override async Task Execute(CounterState.Increment request)
-    {
-        // Update state
-        _count++;
-    }
+    public Task IncreaseCounter() => this.ActionChannel.Send(new IncreaseCounterAction());
 }
 ```
 
-### 3. Use state in components
+### Use State in Components
 
 ```csharp
-@inherits BStateComponent
+@using bstate.web.example.Features.Counter
+@inherits bstate.core.Components.BStateComponent
 
-<h1>Counter: @State.Count</h1>
-<button @onclick="Increment">+</button>
-<button @onclick="Decrement">-</button>
+<div class="card mt-2">
+    <div class="card-body">
+        <h5 class="card-title">Counter</h5>
+        <p class="card-text" role="status">Current count: @State.Count</p>
+        <button class="btn btn-primary" disabled="@State.IsLoading" @onclick="IncrementCount">Click me</button>
+    </div>
+</div>
+
 
 @code {
-    private CounterState State;
-    
-    protected override void OnInitialized()
-    {
-        State = UseState<CounterState>();
-    }
-    
-    private void Increment() => State.Runner.Send(new CounterState.Increment());
-    private void Decrement() => State.Runner.Send(new CounterState.Decrement());
+    CounterState State => this.UseState<CounterState>();
+    private Task IncrementCount() => this.State.IncreaseCounter();   
 }
 ```
 
-## Core Concepts
+## Advanced Features
 
-### BState
+### Preprocessors
 
-The base class for all state objects:
+Preprocessors run before action handlers and can modify or reject actions:
 
 ```csharp
-public abstract class BState
+class AllRequestPreprocessor<TAction> : IPreProcessor<TAction>
+where TAction : IAction
 {
-    protected IActionChannel Runner { get; }
-
-    protected BState(IActionChannel runner)
+    public Task Run(IAction parameter)
     {
-        Runner = runner;
-        this.Initialize();
+        Console.WriteLine("AllRequestPreprocessor");
+        return Task.CompletedTask;
     }
-    protected abstract void Initialize();
 }
 ```
 
-### Actions and Handlers
+### Postprocessors
 
-Actions are simple marker interfaces:
+Postprocessors run after action handlers and can perform side effects:
 
 ```csharp
-public interface IAction { }
-
-public interface IActionHandler<in T> where T : IAction
+class AllRequestPostprocessor<TAction> : IPreProcessor<TAction>
+where TAction : IAction
 {
-    Task Execute(T request);
-}
-
-public abstract class ActionHandler<T>(IStore store) : IActionHandler<T> where T : IAction
-{
-    public abstract Task Execute(T request);
+    public Task Run(IAction parameter)
+    {
+        Console.WriteLine("AllRequestPreprocessor");
+        return Task.CompletedTask;
+    }
 }
 ```
 
-### BStateComponent
+### Behaviors
 
-Components that use state inherit from BStateComponent:
+Behaviors implement cross-cutting concerns for specific action types:
 
 ```csharp
-public abstract class BStateComponent : ComponentBase, IAsyncDisposable
+class ExceptionBehaviour(IJSRuntime jsRuntime) : IBehaviour
 {
-    protected T UseState<T>() where T : BState
+    public async Task Run(IAction parameter, Func<IAction, Task> next)
     {
-        ComponentRegister.Add<T>(this);
-        return ServiceProvider.GetService<T>()!;
+        try
+        {
+            await next(parameter);
+        }
+        catch (Exception ex)
+        {
+            var escapedMessage = ex.InnerException?.Message.Replace("'", "\\'").Replace("\"", "\\\"");
+            var script = $"alert('Exception occurred: {escapedMessage}');";
+            await jsRuntime.InvokeVoidAsync("eval", script);
+        }
     }
-
-    public void BStateRender() => this.StateHasChanged();
-    
-    // ...
 }
 ```
 
 ## Architecture
 
-BState uses a pipeline architecture for processing actions through middleware:
+BState processes actions through a pipeline with these stages:
 
-```csharp
-public async Task Send(IAction action)
-{
-    var pipeline = new PipelineBuilder(serviceProvider)
-        .AddPreprocessors(configuration.MiddlewareRegister.GetPreprocessors())
-        .AddActionRunner()
-        .AddPostprocessors(configuration.MiddlewareRegister.GetPostprocessors())
-        .AddRenderer()
-        .Build();
+1. **Preprocessors**: Run in the order registered, can short-circuit the pipeline
+2. **Behaviors**: Applied to specific action types
+3. **Action Handler**: Executes the main logic for the action
+4. **Postprocessors**: Run in the order registered after the action completes
+5. **Renderer**: Updates the UI automatically for affected components
 
-    await pipeline.Execute(action);
-}
-```
+## Examples
+
+Find more examples in the [BState.Samples](https://github.com/markjackmilian/b-state/tree/main/bstate/bstate.web.example) repository.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-[MIT License](LICENSE)
+BState is licensed under the [MIT License](LICENSE).
