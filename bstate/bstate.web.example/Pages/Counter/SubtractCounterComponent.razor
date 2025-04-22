@@ -1,0 +1,16 @@
+@using bstate.web.example.Features.Counter
+@inherits bstate.core.Components.BStateComponent
+
+<div class="card mt-2">
+    <div class="card-body">
+        <h5 class="card-title">Subtract using a long action</h5>
+        <p class="card-text" role="status">Current count: @State.Count</p>
+        <button class="btn btn-primary" @onclick="DecreaseCounter">Click me</button>
+    </div>
+</div>
+
+
+@code {
+    CounterState State => this.UseState<CounterState>();
+    private Task DecreaseCounter() => State.DecreaseCounter();
+}

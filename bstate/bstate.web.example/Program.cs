@@ -18,8 +18,7 @@ builder.Services.AddBState(configuration =>
     configuration.AddBehaviour<ExceptionBehaviour>();
     configuration.AddBehaviour<LogBehaviour>();
     
-    
-    // configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorGeneric<>));
+    configuration.AddOpenRequestPreProcessor(typeof(AllRequestPreprocessor<>));
     // configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
     // configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
     
