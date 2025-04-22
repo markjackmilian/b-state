@@ -5,7 +5,7 @@
     <div class="card-body">
         <h5 class="card-title">Counter</h5>
         <p class="card-text" role="status">Current count: @State.Count</p>
-        <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+        <button class="btn btn-primary" disabled="@State.IsLoading" @onclick="IncrementCount">Click me</button>
     </div>
 </div>
 

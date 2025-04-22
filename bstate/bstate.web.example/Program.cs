@@ -19,13 +19,9 @@ builder.Services.AddBState(configuration =>
     configuration.AddBehaviour<LogBehaviour>();
     
     configuration.AddOpenRequestPreProcessor(typeof(AllRequestPreprocessor<>));
-    // configuration.AddOpenRequestPreProcessor(typeof(TestPreprocessorOnlyLongGeneric<>));
+    configuration.AddOpenRequestPreProcessor(typeof(ALongActionPreProcessor<>));
     // configuration.AddOpenRequestPostProcessor(typeof(TestPostprocessorMiddleware<>));
-    
-    // configuration.Services.AddTransient<WeatherInitialize>();
 });
-
-
 
 
 await builder.Build().RunAsync();

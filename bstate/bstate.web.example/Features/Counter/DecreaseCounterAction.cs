@@ -1,17 +1,20 @@
 using bstate.core.Classes;
+using bstate.web.example.Classes;
 
 namespace bstate.web.example.Features.Counter;
 
 public partial class CounterState
 {
-    record DecreaseCounterAction : IAction;
+    record DecreaseCounterAction : IAction, ILongAction;
 
     class DecreaseCounterActionHandler(CounterState counterState) : IActionHandler<DecreaseCounterAction>
     {
-        public Task Execute(DecreaseCounterAction request)
+        public async Task Execute(DecreaseCounterAction request)
         {
+            await counterState.SetIsLoading(true);
+            await Task.Delay(2000);
             counterState.Count--;
-            return Task.CompletedTask;
+            await counterState.SetIsLoading(false);
         }
     }
 
