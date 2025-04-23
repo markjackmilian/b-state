@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Reflection;
 using bstate.core.Middlewares;
 using bstate.core.Services;
@@ -5,26 +6,41 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace bstate.core.Classes;
 
-public class BStateConfiguration(IServiceCollection services)
+public interface IBStateConfiguration
 {
-    public virtual IBehaviourRegister BehaviourRegister { get; } = new BehaviourRegister();
+    
+    List<Assembly> LoadAssemblies { get; }
+    IServiceCollection Services { get; }
+    List<ServiceDescriptor> RequestPreProcessorsToRegister { get; set; }
+    List<ServiceDescriptor> RequestPostProcessorsToRegister { get; set; }
+    IBStateConfiguration RegisterFrom(params Assembly[] assemblies);
+    IBStateConfiguration RegisterFromAssemblyOfType<T>();
+    IBStateConfiguration AddOpenRequestPreProcessor(Type openBehaviorType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient);
+    IBStateConfiguration AddOpenRequestPostProcessor(Type openBehaviorType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient);
+    IBStateConfiguration AddBehaviour<T>() where T : class, IBehaviour;
+    IEnumerable<Type> GetBehaviours();
+}
+
+public class BStateConfiguration(IServiceCollection services) : IBStateConfiguration
+{
+    
     public List<Assembly> LoadAssemblies { get; } = [];
     
     public IServiceCollection Services => services;
 
-    public BStateConfiguration RegisterFrom(params Assembly[] assemblies)
+    public IBStateConfiguration RegisterFrom(params Assembly[] assemblies)
     {
         LoadAssemblies.AddRange(assemblies);
         return this;
     }
 
-    public BStateConfiguration RegisterFromAssemblyOfType<T>()
+    public IBStateConfiguration RegisterFromAssemblyOfType<T>()
     {
         LoadAssemblies.Add(typeof(T).Assembly);
         return this;   
     }
     
-    public BStateConfiguration AddOpenRequestPreProcessor(Type openBehaviorType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
+    public IBStateConfiguration AddOpenRequestPreProcessor(Type openBehaviorType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
         if (!openBehaviorType.IsGenericType)
         {
@@ -47,7 +63,7 @@ public class BStateConfiguration(IServiceCollection services)
         return this;
     }
     public List<ServiceDescriptor> RequestPreProcessorsToRegister { get; set; } = [];
-    public BStateConfiguration AddOpenRequestPostProcessor(Type openBehaviorType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
+    public IBStateConfiguration AddOpenRequestPostProcessor(Type openBehaviorType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
         if (!openBehaviorType.IsGenericType)
         {
@@ -72,11 +88,14 @@ public class BStateConfiguration(IServiceCollection services)
 
     public List<ServiceDescriptor> RequestPostProcessorsToRegister { get; set; } = [];
     
-    public BStateConfiguration AddBehaviour<T>() where T : class, IBehaviour 
+    public IBStateConfiguration AddBehaviour<T>() where T : class, IBehaviour 
     {
-        BehaviourRegister.AddBehaviour<T>();
+        _beaviours.Add(typeof(T));
+
         return this;
     }
     
+    private readonly List<Type> _beaviours = [];
+    public IEnumerable<Type> GetBehaviours() => _beaviours;
     
 }

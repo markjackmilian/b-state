@@ -18,12 +18,12 @@ public static class Startup
     /// </summary>
     /// <param name="serviceCollection">The service collection to add services to.</param>
     /// <param name="builder">The configuration builder for BState.</param>
-    public static void AddBState(this IServiceCollection serviceCollection, Action<BStateConfiguration> builder)
+    public static void AddBState(this IServiceCollection serviceCollection, Action<IBStateConfiguration> builder)
     {
         // Configure BState
         var configuration = new BStateConfiguration(serviceCollection);
         builder(configuration);
-        serviceCollection.AddSingleton(configuration);
+        serviceCollection.AddSingleton<IBStateConfiguration>(configuration);
         
         // Get assemblies for type scanning
         var assemblies = configuration.LoadAssemblies.ToArray();
@@ -72,7 +72,7 @@ public static class Startup
         }
         
         // Register beaviours
-        foreach (var postprocessorType in configuration.BehaviourRegister.GetBehaviours())
+        foreach (var postprocessorType in configuration.GetBehaviours())
         {
             serviceCollection.AddTransient(postprocessorType);
         }

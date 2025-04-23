@@ -7,43 +7,43 @@ namespace bstate.core.Services;
 
 internal interface IPipelineBuilder
 {
-    PipelineBuilder AddPreprocessors();
-    PipelineBuilder AddActionRunner();
-    PipelineBuilder AddPostprocessors();
-    PipelineBuilder AddRenderer();
-    PipelineBuilder AddBeaviours(IEnumerable<Type> behaviours);
-    AsyncPipeline<IAction> Build();
+    IPipelineBuilder AddPreprocessors();
+    IPipelineBuilder AddActionRunner();
+    IPipelineBuilder AddPostprocessors();
+    IPipelineBuilder AddRenderer();
+    IPipelineBuilder AddBeaviours(IEnumerable<Type> behaviours);
+    IAsyncPipeline<IAction> Build();
 }
 
-class PipelineBuilder(IServiceProvider serviceProvider) : IPipelineBuilder
+internal class PipelineBuilder(IServiceProvider serviceProvider) : IPipelineBuilder
 {
     private readonly AsyncPipeline<IAction> _pipeline = new(new ServiceProviderMiddlewareResolver(serviceProvider));
 
-    public PipelineBuilder AddPreprocessors()
+    public IPipelineBuilder AddPreprocessors()
     {
         _pipeline.Add<PreProcessorRunnerMiddleware>();
         return this;
     }
 
-    public PipelineBuilder AddActionRunner()
+    public IPipelineBuilder AddActionRunner()
     {
         _pipeline.Add<ActionRunnerMiddleware>();
         return this;
     }
 
-    public PipelineBuilder AddPostprocessors()
+    public IPipelineBuilder AddPostprocessors()
     {
         _pipeline.Add<PostProcessorRunnerMiddleware>();
         return this;
     }
 
-    public PipelineBuilder AddRenderer()
+    public IPipelineBuilder AddRenderer()
     {
         _pipeline.Add<PostProcessorRenderer>();
         return this;
     }
     
-    public PipelineBuilder AddBeaviours(IEnumerable<Type> behaviours)
+    public IPipelineBuilder AddBeaviours(IEnumerable<Type> behaviours)
     {
         foreach (var behaviour in behaviours)
         {
@@ -52,7 +52,7 @@ class PipelineBuilder(IServiceProvider serviceProvider) : IPipelineBuilder
         return this;
     }
 
-    public AsyncPipeline<IAction> Build()
+    public IAsyncPipeline<IAction> Build()
     {
         return _pipeline;
     }
