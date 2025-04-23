@@ -54,7 +54,7 @@ public partial class BStateComponent
         _onBStateRenders.Add(typeof(T));
     }
     
-    private async Task InvokeOnBStateRender()
+    internal async Task InvokeOnBStateRender()
     {
         var instances = _onBStateRenders.Select(s => (IOnBStateRender)ServiceProvider.GetService(s));
         foreach (var onBStateRender in instances.Where(w => w is not null))
