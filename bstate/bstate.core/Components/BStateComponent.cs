@@ -8,10 +8,10 @@ namespace bstate.core.Components;
 public abstract partial class BStateComponent : ComponentBase, IAsyncDisposable
 {
     [Inject]
-    private IComponentRegister ComponentRegister { get; set; } 
+    internal IComponentRegister ComponentRegister { get; set; } 
     
     [Inject]
-    private IServiceProvider ServiceProvider { get; set; } 
+    internal IServiceProvider ServiceProvider { get; set; } 
 
     protected T UseState<T>() where T : BState
     {

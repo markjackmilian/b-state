@@ -16,7 +16,7 @@ public partial class BStateComponent
     
     private readonly ConcurrentBag<Type> _onInitializes = [];
     
-    protected void UseOnInitiaze<T>() where T : IOnInitialize
+    protected void UseOnInitialize<T>() where T : IOnInitialize
     {
         _onInitializes.Add(typeof(T));
     }
