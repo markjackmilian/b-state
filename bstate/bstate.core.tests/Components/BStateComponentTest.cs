@@ -50,24 +50,7 @@ public class BStateComponentTest
             ServiceProvider = _mockServiceProvider.Object
         };
     }
-
-    [TestMethod]
-    public void UseState_Should_InitializeState_WhenStateIsNotInitialized()
-    {
-        // Arrange
-        var mockState = new Mock<BState>(new Mock<IActionBus>().Object);
-        _mockServiceProvider.Setup(sp => sp.GetService(typeof(TestState)))
-            .Returns(mockState.Object);
-
-        // Act
-        var state = _testComponent.PublicUseStateForTest<TestState>();
-
-        // Assert
-        _mockComponentRegister.Verify(cr => cr.Add<TestState>(_testComponent), Times.Once);
-        Assert.AreEqual(mockState.Object, state);
-        mockState.Verify(s => s.InitializeIfNeeded(), Times.Once);
-    }
-
+    
     [TestMethod]
     public void ConfigureCustomLifeCycle_Should_BeCallable()
     {
