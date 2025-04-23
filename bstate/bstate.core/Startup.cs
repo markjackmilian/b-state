@@ -45,7 +45,6 @@ public static class Startup
     {
         // Register singleton services
         serviceCollection.AddSingleton<IComponentRegister, ComponentRegister>();
-        serviceCollection.AddSingleton<IStore, Store>();
         serviceCollection.AddSingleton<IActionBus, ActionBus>();
         serviceCollection.AddSingleton<IPipelineBuilder, PipelineBuilder>();
         
