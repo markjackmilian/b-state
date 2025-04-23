@@ -4,6 +4,7 @@ using bstate.core.Classes;
 using bstate.core.Middlewares;
 using bstate.core.Services;
 using bstate.core.Services.Lifecycle;
+using PipelineNet.Pipelines;
 
 namespace bstate.core;
 
@@ -46,6 +47,7 @@ public static class Startup
         serviceCollection.AddSingleton<IComponentRegister, ComponentRegister>();
         serviceCollection.AddSingleton<IStore, Store>();
         serviceCollection.AddSingleton<IActionBus, ActionBus>();
+        serviceCollection.AddSingleton<IPipelineBuilder, PipelineBuilder>();
         
         // Register transient services
         serviceCollection.AddTransient<ActionRunnerMiddleware>();

@@ -7,7 +7,7 @@ namespace bstate.core.Classes;
 
 public class BStateConfiguration(IServiceCollection services)
 {
-    public IBehaviourRegister BehaviourRegister { get; } = new BehaviourRegister();
+    public virtual IBehaviourRegister BehaviourRegister { get; } = new BehaviourRegister();
     public List<Assembly> LoadAssemblies { get; } = [];
     
     public IServiceCollection Services => services;
