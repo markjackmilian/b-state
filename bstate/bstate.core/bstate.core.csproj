@@ -4,6 +4,15 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <Version>0.0.1</Version>
+        <Title>b-state a simple state manager for Blazor</Title>
+        <Authors>Marco Milani</Authors>
+        <Description>B-State is a lightweight state manager for Blazor that simplifies complex state handling. It features a pipeline architecture with preprocessors and postprocessors to transform state before and after changes, reusable behaviors for shared logic, and seamless integration with Blazor's component lifecycle. B-State makes state management in Blazor applications more maintainable and predictable.</Description>
+        <Copyright>Marco Milani</Copyright>
+        <PackageProjectUrl>https://github.com/markjackmilian/b-state</PackageProjectUrl>
+        <PackageIcon>logo.png</PackageIcon>
+        <RepositoryUrl>https://github.com/markjackmilian/b-state</RepositoryUrl>
+        <PackageTags>blazor, state manager, bstate,b-state</PackageTags>
     </PropertyGroup>
 
 
@@ -16,6 +25,21 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
         <PackageReference Include="PipelineNet" Version="0.11.0" />
         <PackageReference Include="PipelineNet.ServiceProvider" Version="0.11.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="logo.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\logo.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>logo.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>
