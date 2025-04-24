@@ -177,13 +177,13 @@ BState provides lifecycle hooks that allow you to execute code at specific point
 
 - **IOnInitialize**: Executes when a component is initialized
 - **IOnParametersSet**: Executes when component parameters are set
-- **IOnBStateRender**: Executes when a component is about to render
+- **IOnBStateRender**: Executes when a component is about to render from bstate library
 - **IOnAfterRenderAsync**: Executes after a component has rendered
 - **IOnDisposeAsync**: Executes when a component is being disposed
 
-### Using Lifecycle Hooks
 
-To use these hooks, create a service that implements one or more of these interfaces:
+### Roslyn Analyzer
+The bstate.analyzer project is a Roslyn Analyzer designed to enforce and strengthen the use of project conventions. It helps ensure consistency and adherence to coding standards across the workspace by analyzing code and providing actionable feedback during development.
 
 ## Contributing
 
