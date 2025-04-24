@@ -1,7 +1,7 @@
 ![b-state logo](logo.png "Logo")
 
 
-# BState - Advanced State Management for Blazor
+# BState - State Manager for Blazor
 
 BState is a powerful state management library designed specifically for Blazor applications. It provides a clean, efficient way to manage application state through a flexible pipeline architecture.
 
