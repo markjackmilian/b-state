@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
         <id>b-state</id>
-        <version>0.0.1-alpha3</version>
+        <version>1.0.0</version>
         <authors>Marco Milani</authors>
         <owners>Marco Milani</owners>
         <license type="expression">MIT</license> <!-- adjust if needed -->
