@@ -36,7 +36,7 @@ public class ActionBusTest
             .Returns(_pipelineBuilderMock.Object);
 
         _pipelineBuilderMock
-            .Setup(pb => pb.AddBeaviours(It.IsAny<IEnumerable<Type>>())).Returns(_pipelineBuilderMock.Object);
+            .Setup(pb => pb.AddBehaviours(It.IsAny<IEnumerable<Type>>())).Returns(_pipelineBuilderMock.Object);
         _pipelineBuilderMock
             .Setup(pb => pb.AddPreprocessors()).Returns(_pipelineBuilderMock.Object);
         _pipelineBuilderMock
@@ -60,7 +60,7 @@ public class ActionBusTest
         await _actionBus.Send(actionMock.Object);
 
         // Assert
-        _pipelineBuilderMock.Verify(pb => pb.AddBeaviours(It.IsAny<IEnumerable<Type>>()), Times.Once);
+        _pipelineBuilderMock.Verify(pb => pb.AddBehaviours(It.IsAny<IEnumerable<Type>>()), Times.Once);
         _pipelineBuilderMock.Verify(pb => pb.AddPreprocessors(), Times.Once);
         _pipelineBuilderMock.Verify(pb => pb.AddActionRunner(), Times.Once);
         _pipelineBuilderMock.Verify(pb => pb.AddPostprocessors(), Times.Once);
@@ -86,7 +86,7 @@ public class ActionBusTest
         await _actionBus.Send(actionMock.Object);
 
         // Assert
-        _pipelineBuilderMock.Verify(pb => pb.AddBeaviours(It.Is<IEnumerable<Type>>(b => b != null && !b.Any())),
+        _pipelineBuilderMock.Verify(pb => pb.AddBehaviours(It.Is<IEnumerable<Type>>(b => b != null && !b.Any())),
             Times.Once);
         _pipelineMock.Verify(pipeline => pipeline.Execute(actionMock.Object), Times.Once);
     }
@@ -103,7 +103,7 @@ public class ActionBusTest
         await _actionBus.Send(actionMock.Object);
 
         // Assert
-        _pipelineBuilderMock.Verify(pb => pb.AddBeaviours(behaviours), Times.Once);
+        _pipelineBuilderMock.Verify(pb => pb.AddBehaviours(behaviours), Times.Once);
         _pipelineMock.Verify(pipeline => pipeline.Execute(actionMock.Object), Times.Once);
     }
 

@@ -90,12 +90,12 @@ public class BStateConfiguration(IServiceCollection services) : IBStateConfigura
     
     public IBStateConfiguration AddBehaviour<T>() where T : class, IBehaviour 
     {
-        _beaviours.Add(typeof(T));
+        _behaviours.Add(typeof(T));
 
         return this;
     }
     
-    private readonly List<Type> _beaviours = [];
-    public IEnumerable<Type> GetBehaviours() => _beaviours;
+    private readonly List<Type> _behaviours = [];
+    public IEnumerable<Type> GetBehaviours() => _behaviours;
     
 }

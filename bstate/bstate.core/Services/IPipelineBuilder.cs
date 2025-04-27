@@ -11,7 +11,7 @@ internal interface IPipelineBuilder
     IPipelineBuilder AddActionRunner();
     IPipelineBuilder AddPostprocessors();
     IPipelineBuilder AddRenderer();
-    IPipelineBuilder AddBeaviours(IEnumerable<Type> behaviours);
+    IPipelineBuilder AddBehaviours(IEnumerable<Type> behaviours);
     IAsyncPipeline<IAction> Build();
 }
 
@@ -43,7 +43,7 @@ internal class PipelineBuilder(IServiceProvider serviceProvider) : IPipelineBuil
         return this;
     }
     
-    public IPipelineBuilder AddBeaviours(IEnumerable<Type> behaviours)
+    public IPipelineBuilder AddBehaviours(IEnumerable<Type> behaviours)
     {
         foreach (var behaviour in behaviours)
         {

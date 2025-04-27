@@ -15,8 +15,7 @@ public class ActionRunnerMiddleware(IServiceProvider serviceProvider) : IAsyncMi
         {
             var executeMethod = handlerType.GetMethod("Execute");
             var task = (Task)executeMethod!.Invoke(handler, [parameter]);
-            Debug.Assert(task != null, nameof(task) + " != null");
-            await task;
+            await task!;
         }
     
         await next(parameter);

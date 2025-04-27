@@ -23,7 +23,7 @@ class ActionBus(IServiceProvider serviceProvider, IBStateConfiguration configura
             throw new InvalidOperationException("Pipeline builder not found");
         
         var pipeline = builder
-            .AddBeaviours(configuration.GetBehaviours())
+            .AddBehaviours(configuration.GetBehaviours())
             .AddPreprocessors()
             .AddActionRunner()
             .AddPostprocessors()
