@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <id>b-state</id>
+        <version>0.0.1-alpha3</version>
+        <authors>Marco Milani</authors>
+        <owners>Marco Milani</owners>
+        <license type="expression">MIT</license> <!-- adjust if needed -->
+        <projectUrl>https://github.com/markjackmilian/b-state</projectUrl>
+        <repository type="git" url="https://github.com/markjackmilian/b-state" />
+        <icon>logo.png</icon>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>B-State is a lightweight state manager for Blazor that simplifies complex state handling. It features a pipeline architecture with preprocessors and postprocessors to transform state before and after changes, reusable behaviors for shared logic, and seamless integration with Blazor's component lifecycle. B-State makes state management in Blazor applications more maintainable and predictable.</description>
+        <tags>blazor state manager bstate b-state</tags>
+
+        <dependencies>
+            <group targetFramework="net9.0">
+                <dependency id="Microsoft.AspNetCore.Components.Web" version="9.0.3" />
+                <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="9.0.4" />
+                <dependency id="PipelineNet" version="0.11.0" />
+                <dependency id="PipelineNet.ServiceProvider" version="0.11.0" />
+            </group>
+        </dependencies>
+
+        <contentFiles>
+            <files include="..\logo.png" buildAction="None" copyToOutput="true" />
+        </contentFiles>
+    </metadata>
+
+    <files>
+        <!-- DLLs -->
+        <file src="..\bstate\bstate.core\bin\Release\net9.0\*.dll" target="lib\net9.0" />
+
+        <!-- Include analyzer DLL -->
+        <file src="..\bstate\bstate.analyzer\bstate.analyzer\bin\Release\netstandard2.0\*.dll" target="analyzers\dotnet\cs" />
+
+        <!-- Include the logo -->
+        <file src="..\logo.png" target="" />
+    </files>
+</package>
