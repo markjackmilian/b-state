@@ -18,7 +18,7 @@ BState is a powerful state management library designed specifically for Blazor a
 ### Installation
 
 ```bash
-dotnet add package BState.Core
+dotnet add package b-state
 ```
 
 ### Register Services
