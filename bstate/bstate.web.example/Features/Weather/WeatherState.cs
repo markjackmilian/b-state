@@ -9,10 +9,6 @@ public partial class WeatherState(IActionBus actionChannel) : BState(actionChann
 {
     public IEnumerable<WeatherForecast> Forecasts { get; private set; }
 
-    protected override void Initialize()
-    {
-    }
-    
     record SetForecastAction(IEnumerable<WeatherForecast> Forecasts) : IAction;
 
 }

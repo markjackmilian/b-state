@@ -17,7 +17,6 @@ public abstract partial class BStateComponent : ComponentBase, IAsyncDisposable
     {
         ComponentRegister.Add<T>(this);
         var state = ServiceProvider.GetService<T>()!;
-        state.InitializeIfNeeded();
         return state;
     }
 }

@@ -179,10 +179,6 @@ public class ComponentRegisterTest
         public AnotherBState() : base(null!)
         {
         }
-
-        protected override void Initialize()
-        {
-        }
     }
 
  

@@ -167,9 +167,5 @@ public class BStateComponentTest
         public TestState() : base(new Mock<IActionBus>().Object)
         {
         }
-
-        protected override void Initialize()
-        {
-        }
     }
 }
