@@ -49,13 +49,9 @@ builder.Services.AddBState(configuration =>
 ```csharp
 public partial class CounterState(IActionBus actionChannel) : BState(actionChannel)
 {
-    public int Count { get; private set; }
+    public int Count { get; private set; } = 100; // init to 100 for some business rules :)
     public bool IsLoading { get; private set; }
-    protected override void Initialize()
-    {
-        this.Count = 100; // init to 100 for some business rules :)
-    }
-
+    
     // Define your actions as nested types
     record IncreaseCounterAction : IAction;
     record DecreaseCounterAction : IAction, ILongAction;
