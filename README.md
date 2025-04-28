@@ -125,12 +125,12 @@ where TAction : IAction
 Postprocessors run after action handlers and can perform side effects:
 
 ```csharp
-class AllRequestPostprocessor<TAction> : IPreProcessor<TAction>
+class AllRequestPostprocessor<TAction> : IPostProcessor<TAction>
 where TAction : IAction
 {
     public Task Run(IAction parameter)
     {
-        Console.WriteLine("AllRequestPreprocessor");
+        Console.WriteLine("AllRequestPostprocessor");
         return Task.CompletedTask;
     }
 }
