@@ -1,24 +1,25 @@
 using bstate.core.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace bstate.core.Services;
 
 internal interface IComponentRegister : IDisposable
 {
-    void Add<T>(BStateComponent component) where T : BState;
-    void Remove<T>(BStateComponent component) where T : BState;
-    void Clear(BStateComponent component);
+    void Add<T>(ComponentBase component) where T : BState;
+    void Remove<T>(ComponentBase component) where T : BState;
+    void Clear(ComponentBase component);
 
-    BStateComponent[] GetComponents<T>() where T : BState;
-    BStateComponent[] GetComponents(Type stateType);
-    BStateComponent[] GetComponents();
+    ComponentBase[] GetComponents<T>() where T : BState;
+    ComponentBase[] GetComponents(Type stateType);
+    ComponentBase[] GetComponents();
 }
 
 internal sealed class ComponentRegister : IComponentRegister
 {
-    private readonly Dictionary<Type, HashSet<BStateComponent>> _stateComponents = new();
+    private readonly Dictionary<Type, HashSet<ComponentBase>> _stateComponents = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
-    public void Add<T>(BStateComponent component) where T : BState
+    public void Add<T>(ComponentBase component) where T : BState
     {
         var stateType = typeof(T);
 
@@ -39,7 +40,7 @@ internal sealed class ComponentRegister : IComponentRegister
         }
     }
 
-    public void Remove<T>(BStateComponent component) where T : BState
+    public void Remove<T>(ComponentBase component) where T : BState
     {
         var stateType = typeof(T);
 
@@ -61,7 +62,7 @@ internal sealed class ComponentRegister : IComponentRegister
         }
     }
 
-    public void Clear(BStateComponent component)
+    public void Clear(ComponentBase component)
     {
         _lock.EnterWriteLock();
         try
@@ -85,9 +86,9 @@ internal sealed class ComponentRegister : IComponentRegister
         }
     }
 
-    public BStateComponent[] GetComponents<T>() where T : BState => GetComponents(typeof(T));
+    public ComponentBase[] GetComponents<T>() where T : BState => GetComponents(typeof(T));
 
-    public BStateComponent[] GetComponents(Type stateType)
+    public ComponentBase[] GetComponents(Type stateType)
     {
         _lock.EnterReadLock();
         try
@@ -105,13 +106,13 @@ internal sealed class ComponentRegister : IComponentRegister
         }
     }
 
-    public BStateComponent[] GetComponents()
+    public ComponentBase[] GetComponents()
     {
         _lock.EnterReadLock();
         try
         {
             // Create a new HashSet to avoid duplicate components
-            var allComponents = new HashSet<BStateComponent>();
+            var allComponents = new HashSet<ComponentBase>();
 
             // Iterate through all state types in the dictionary
             foreach (var componentSet in _stateComponents.Values)
