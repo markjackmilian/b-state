@@ -1,16 +1,17 @@
+@using bstate.core.Services
 @using bstate.web.example.Features.Counter
-@inherits bstate.core.Components.BStateComponent
+@inject IComponentService ComponentService
 
 <div class="card mt-2">
     <div class="card-body">
         <h5 class="card-title">Subtract using a long action</h5>
         <p class="card-text" role="status">Current count: @State.Count</p>
-        <button class="btn btn-primary"disabled="@State.IsLoading" @onclick="DecreaseCounter">Click me</button>
+        <button class="btn btn-primary" disabled="@State.IsLoading" @onclick="DecreaseCounter">Click me</button>
     </div>
 </div>
 
 
 @code {
-    CounterState State => this.UseState<CounterState>();
+    CounterState State => ComponentService.UseState<CounterState>(this);
     private Task DecreaseCounter() => State.DecreaseCounter();
 }
