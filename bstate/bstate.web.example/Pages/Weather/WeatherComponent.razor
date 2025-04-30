@@ -1,5 +1,8 @@
+@using bstate.core.Services
 @using bstate.web.example.Features.Weather
-@inherits bstate.core.Components.BStateComponent
+@using bstate.web.example.Pages.Weather.Models
+@inject IComponentService ComponentService
+@inject HttpClient HttpClient
 
 @if (State.Forecasts == null)
 {
@@ -33,10 +36,20 @@ else
 }
 
 @code {
-    WeatherState State => this.UseState<WeatherState>();
+    
+    WeatherState State => ComponentService.UseState<WeatherState>(this);
 
-    protected override void ConfigureCustomLifeCycle()
+    // protected override void ConfigureCustomLifeCycle()
+    // {
+    //     this.UseOnInitialize<WeatherInitialize>();
+    // }
+
+    protected override async Task OnInitializedAsync()
     {
-        this.UseOnInitialize<WeatherInitialize>();
+        await Task.Delay(2000); // simulate async call ( fetch data from server)
+        var forecasts = await HttpClient.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        await State.SetForecasts(forecasts);
+        await base.OnInitializedAsync();
     }
+
 }
