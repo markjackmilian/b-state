@@ -13,7 +13,8 @@ class PostProcessorRenderer(IComponentRegister register) : IAsyncMiddleware<IAct
         var components = register.GetComponents(stateType);
         foreach (var bStateComponent in components)
         {
-            await bStateComponent.BStateRender();
+            await (Task)bStateComponent.GetType().GetMethod("InvokeAsync", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(bStateComponent,
+                [(Action)(() => bStateComponent.GetType().GetMethod("StateHasChanged")!.Invoke(bStateComponent, null))])!;
         }
     }
 }
