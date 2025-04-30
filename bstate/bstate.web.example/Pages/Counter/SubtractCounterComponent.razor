@@ -1,6 +1,6 @@
 @using bstate.core.Services
 @using bstate.web.example.Features.Counter
-@inject IComponentService ComponentService
+@inject IBstateService BstateService
 
 <div class="card mt-2">
     <div class="card-body">
@@ -12,6 +12,6 @@
 
 
 @code {
-    CounterState State => ComponentService.UseState<CounterState>(this);
+    CounterState State => BstateService.UseState<CounterState>(this);
     private Task DecreaseCounter() => State.DecreaseCounter();
 }
