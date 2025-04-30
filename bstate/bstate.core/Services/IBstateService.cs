@@ -6,6 +6,7 @@ namespace bstate.core.Services;
 public interface IBstateService
 {
     T UseState<T>(ComponentBase component) where T : BState;
+    void OnComponentDisposed(ComponentBase componentBase);
 }
 
 class BstateService(IComponentRegister componentRegister, IServiceProvider serviceProvider) : IBstateService
@@ -15,5 +16,10 @@ class BstateService(IComponentRegister componentRegister, IServiceProvider servi
         componentRegister.Add<T>(component);
         var state = serviceProvider.GetService<T>()!;
         return state;
+    }
+
+    public void OnComponentDisposed(ComponentBase componentBase)
+    {
+        componentRegister.Clear(componentBase);
     }
 }
