@@ -98,6 +98,38 @@ public partial class CounterState
 }
 ```
 
+From version 1.1.0 you can avoid to extend bstatecomponent using following code:
+```csharp
+@using bstate.core.Services
+@using bstate.web.example.Features.Counter
+@implements IAsyncDisposable
+@inject IBstate Bstate
+
+<div class="card mt-2">
+    <div class="card-body">
+        <h5 class="card-title">Subtract using a long action</h5>
+        <p class="card-text" role="status">Current count: @State.Count</p>
+        <button class="btn btn-primary" disabled="@State.IsLoading" @onclick="DecreaseCounter">Click me</button>
+    </div>
+</div>
+
+@code {
+    CounterState State => Bstate.UseState<CounterState>(this);
+    private Task DecreaseCounter() => State.DecreaseCounter();
+
+    public ValueTask DisposeAsync()
+    {
+        Bstate.OnComponentDisposed(this);
+        return ValueTask.CompletedTask;
+    }
+
+}
+```
+This prevents cases where you don't want to/cannot extend the base class. 
+**Please note: it is necessary that the component implements IAsyncDisposable to ensure that the registry is properly cleaned up.** 
+
+If you can extend the base class, this behavior is managed automatically.
+
 ## Advanced Features
 
 ### Preprocessors
