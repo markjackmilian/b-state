@@ -5,7 +5,7 @@
         <version>1.1.0</version>
         <authors>Marco Milani</authors>
         <owners>Marco Milani</owners>
-        <license type="expression">MIT</license> <!-- adjust if needed -->
+        <license type="expression">MIT</license> 
         <projectUrl>https://github.com/markjackmilian/b-state</projectUrl>
         <repository type="git" url="https://github.com/markjackmilian/b-state" />
         <icon>logo.png</icon>
