@@ -47,7 +47,7 @@ public static class Startup
         serviceCollection.AddSingleton<IComponentRegister, ComponentRegister>();
         serviceCollection.AddSingleton<IActionBus, ActionBus>();
         serviceCollection.AddSingleton<IPipelineBuilder, PipelineBuilder>();
-        serviceCollection.AddScoped<IBstateService, BstateService>();
+        serviceCollection.AddScoped<IBstate, Bstate>();
         
         // Register transient services
         serviceCollection.AddTransient<ActionRunnerMiddleware>();

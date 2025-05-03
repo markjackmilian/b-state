@@ -1,7 +1,7 @@
 @using bstate.core.Services
 @using bstate.web.example.Features.Counter
 @implements IAsyncDisposable
-@inject IBstateService BstateService
+@inject IBstate Bstate
 
 <div class="card mt-2">
     <div class="card-body">
@@ -13,12 +13,12 @@
 
 
 @code {
-    CounterState State => BstateService.UseState<CounterState>(this);
+    CounterState State => Bstate.UseState<CounterState>(this);
     private Task DecreaseCounter() => State.DecreaseCounter();
 
     public ValueTask DisposeAsync()
     {
-        BstateService.OnComponentDisposed(this);
+        Bstate.OnComponentDisposed(this);
         return ValueTask.CompletedTask;
     }
 

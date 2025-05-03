@@ -3,13 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace bstate.core.Services;
 
-public interface IBstateService
+public interface IBstate
 {
     T UseState<T>(ComponentBase component) where T : BState;
     void OnComponentDisposed(ComponentBase componentBase);
 }
 
-class BstateService(IComponentRegister componentRegister, IServiceProvider serviceProvider) : IBstateService
+class Bstate(IComponentRegister componentRegister, IServiceProvider serviceProvider) : IBstate
 {
     public T UseState<T>(ComponentBase component) where T : BState
     {
